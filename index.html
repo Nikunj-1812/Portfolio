@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikunj Sorathiya | Portfolio</title>
+  <meta name="description" content="Nikunj Sorathiya - Full Stack Web Developer & AI/ML enthusiast">
+  <meta property="og:title" content="Nikunj Sorathiya | Portfolio">
+  <meta property="og:description" content="Full Stack Web Developer & AI/ML enthusiast building scalable web apps and intelligent systems.">
+  <meta property="og:image" content="https://picsum.photos/seed/portfolio/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Clash Display + Satoshi (Fontshare) -->
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+  <!-- Devicons (tech stack) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Theme Init to prevent flash -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="cursor-dot"></div>
+  <div id="scroll-bar"></div>
+
+  <div id="navbar-placeholder"></div>
+
+  <main>
+    <div id="hero-placeholder"></div>
+
+    <div id="about-placeholder"></div>
+
+    <section id="projects" class="reveal">
+      <div class="section-header-wrap">
+        <div class="sh-watermark">PROJECTS</div>
+        <div class="sh-label">MY WORK</div>
+        <h2 class="sh-title">Things I've built that I'm proud of.</h2>
+        <div class="sh-line"></div>
+        <p class="sh-desc">From full-stack web apps to AI-powered tools — hover each card to see it in full color.</p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card interactive" data-tilt>
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/webdev/600/340" alt="DevFlow project" class="project-img" loading="lazy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span>React</span><span>Node.js</span><span>MongoDB</span>
+            </div>
+            <h3>DevFlow</h3>
+            <p>A real-time project management SaaS with drag-and-drop boards, team collaboration, and Slack integration.</p>
+            <div class="project-links">
+              <a href="#" class="interactive"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt>
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/aiml/600/340" alt="NeuralVision project" class="project-img" loading="lazy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span>Python</span><span>FastAPI</span><span>TensorFlow</span>
+            </div>
+            <h3>NeuralVision</h3>
+            <p>An AI image classification API that detects objects in real-time using a custom-trained CNN model.</p>
+            <div class="project-links">
+              <a href="#" class="interactive"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt>
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/saas/600/340" alt="ShopSense project" class="project-img" loading="lazy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span>Next.js</span><span>PostgreSQL</span><span>Stripe</span>
+            </div>
+            <h3>ShopSense</h3>
+            <p>A full-stack e-commerce platform with AI-powered product recommendations and real-time inventory.</p>
+            <div class="project-links">
+              <a href="#" class="interactive"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="github" class="reveal">
+      <div class="section-header-wrap">
+        <div class="sh-watermark">GITHUB</div>
+        <div class="sh-label">OPEN SOURCE</div>
+        <h2 class="sh-title">I commit like I mean it.</h2>
+        <div class="sh-line"></div>
+        <p class="sh-desc">Active contributor — shipping code, reviewing PRs, and building in public.</p>
+      </div>
+
+      <div class="github-container">
+        <div class="contrib-scroll">
+          <div class="contrib-grid"></div>
+        </div>
+        <div class="github-stats">
+          <div class="g-stat"><strong>847</strong> <span>Contributions</span></div>
+          <div class="g-stat"><strong>34</strong> <span>Repos</span></div>
+          <div class="g-stat"><strong>218</strong> <span>Stars</span></div>
+          <div class="g-stat"><strong>56</strong> <span>PRs</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog-preview" class="reveal">
+      <div class="section-header-wrap">
+        <div class="sh-watermark">BLOG</div>
+        <div class="sh-label">WRITING</div>
+        <h2 class="sh-title">Thoughts on code, AI, and the web.</h2>
+        <div class="sh-line"></div>
+        <p class="sh-desc">I write about things I'm learning, building, and breaking.</p>
+      </div>
+
+      <div class="blog-grid">
+        <article class="blog-card interactive" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/reactperf/600/340" alt="React Server Components blog post" class="blog-thumb" loading="lazy">
+            <span class="blog-cat">React</span>
+          </div>
+          <div class="blog-body">
+            <h3>Why React Server Components Changed How I Build Apps</h3>
+            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/aidev/600/340" alt="Image Classifier blog post" class="blog-thumb" loading="lazy">
+            <span class="blog-cat">AI/ML</span>
+          </div>
+          <div class="blog-body">
+            <h3>Building My First Image Classifier with TensorFlow.js</h3>
+            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/nextjs/600/340" alt="Zero-Downtime Deploy blog post" class="blog-thumb" loading="lazy">
+            <span class="blog-cat">DevOps</span>
+          </div>
+          <div class="blog-body">
+            <h3>Docker + GitHub Actions: My Zero-Downtime Deploy Setup</h3>
+            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+
+      <div class="center-btn">
+        <a href="blog.html" class="btn-secondary interactive">View All Posts <i class="ti ti-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal contact-section">
+      <div class="section-header-wrap center-header">
+        <div class="sh-watermark">CONNECT</div>
+        <div class="sh-label">GET IN TOUCH</div>
+        <h2 class="sh-title">Let's build something great.</h2>
+        <div class="sh-line"></div>
+        <p class="sh-desc">Open to freelance projects, full-time roles, AI collaborations, and open source partnerships.</p>
+      </div>
+
+      <div class="contact-ctas">
+        <button id="book-call-btn" class="btn-primary btn-large magnetic interactive"><i class="ti ti-phone"></i> Book Free Call</button>
+      </div>
+
+      <div class="contact-socials">
+        <a href="https://www.linkedin.com/in/nikunj-sorathiya-6b7098382/" class="social-btn interactive" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-linkedin"></i></a>
+        <a href="https://github.com/Nikunj-1812" class="social-btn interactive" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-github"></i></a>
+        <a href="https://x.com/Nikunj_1812_" class="social-btn interactive" aria-label="X" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-x"></i></a>
+        <a href="mailto:nikunjsorathiya712@gmail.com" class="social-btn interactive" aria-label="Email"><i class="ti ti-mail"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="bot-container">
+    <button id="bot-trigger" class="interactive tooltip" aria-label="Chat Bot">
+      <img src="assets/logo.png" alt="Bot Logo" class="bot-trigger-logo">
+      <span class="tooltip-text">Ask me about Nikunj 👋</span>
+    </button>
+    <div id="bot-panel" class="bot-panel">
+      <div class="bot-header">
+        <div class="bot-title"><span class="status-dot"></span> Portfolio Bot</div>
+        <button id="bot-close" class="interactive" aria-label="Close Bot"><i class="ti ti-x"></i></button>
+      </div>
+      <div id="bot-messages" class="bot-messages">
+        <div class="bot-message bot">Hey! I'm Nikunj's portfolio bot. Ask me about his skills, projects, or availability! 👋</div>
+      </div>
+      <div class="bot-input-area">
+        <input type="text" id="bot-input" placeholder="Type a message..." class="interactive" aria-label="Bot message">
+        <button id="bot-send" class="interactive" aria-label="Send"><i class="ti ti-send"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="booking-modal" class="booking-modal">
+    <div class="booking-content">
+      <button class="close-booking close-modal-x interactive" aria-label="Close"><i class="ti ti-x"></i></button>
+      
+      <!-- Step 1: Calendar & Time -->
+      <div id="booking-step-1" class="booking-step active">
+        <h3 class="b-title">Select Date & Time</h3>
+        <div class="booking-layout">
+          <div class="booking-left">
+            <label>Date</label>
+            <input type="date" id="b-date" class="b-input interactive" required>
+            <div class="booking-row mt-2">
+              <div>
+                <label>State</label>
+                <input type="text" id="b-state" class="b-input interactive" placeholder="State" required>
+              </div>
+              <div>
+                <label>City</label>
+                <input type="text" id="b-city" class="b-input interactive" placeholder="City" required>
+              </div>
+            </div>
+            <label class="mt-2">Online Meeting</label>
+            <select id="b-location" class="b-input interactive">
+              <option value="Google Meet">Google Meet</option>
+              <option value="Zoom">Zoom</option>
+              <option value="Phone Call">Phone Call</option>
+            </select>
+          </div>
+          <div class="booking-right">
+            <label>Available Times</label>
+            <div class="time-slots" id="time-slots">
+              <button class="time-slot interactive">09:00 AM</button>
+              <button class="time-slot interactive">10:30 AM</button>
+              <button class="time-slot interactive">01:00 PM</button>
+              <button class="time-slot interactive">03:30 PM</button>
+            </div>
+          </div>
+        </div>
+        <button id="b-next-btn" class="btn-primary w-100 interactive mt-4" disabled>Next Step <i class="ti ti-arrow-right"></i></button>
+      </div>
+
+      <!-- Step 2: Form -->
+      <div id="booking-step-2" class="booking-step">
+        <button class="b-back-btn interactive"><i class="ti ti-arrow-left"></i> Back</button>
+        <h3 class="b-title mt-2">Confirm Booking</h3>
+        
+        <div class="b-summary">
+          <p><i class="ti ti-calendar"></i> <span id="sum-date">...</span> at <span id="sum-time">...</span></p>
+          <p><i class="ti ti-map-pin"></i> <span id="sum-loc">...</span></p>
+        </div>
+        
+        <div class="b-form">
+          <label>Your Name</label>
+          <input type="text" id="b-name" placeholder="John Doe" class="b-input interactive" required>
+          <label>Email Address</label>
+          <input type="email" id="b-email" placeholder="john@example.com" class="b-input interactive" required>
+          <label>Additional Notes</label>
+          <textarea id="b-notes" placeholder="What would you like to discuss?" class="b-input interactive"></textarea>
+          <button id="confirm-booking-btn" class="btn-primary w-100 interactive mt-2">Confirm Booking</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="booking-step-3" class="booking-step text-center">
+        <div class="b-success-icon"><i class="ti ti-check"></i></div>
+        <h3 class="b-title">Booking Confirmed!</h3>
+        <p class="b-desc">Thank you, <span id="success-name"></span>! A calendar invitation has been sent to <span id="success-email"></span>.</p>
+        <button class="btn-secondary w-100 interactive mt-4 close-booking">Close Window</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- VanillaTilt -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+
+  <!-- Component Loader (will load main.js) -->
+  <script src="loadComponents.js"></script>
+</body>
+</html>

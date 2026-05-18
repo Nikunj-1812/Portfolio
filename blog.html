@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Nikunj Sorathiya</title>
+  <meta name="description" content="Tutorials, opinions, and deep-dives on web dev and AI/ML.">
+  <meta name="theme-color" content="#0D0D0D">
+  <!-- Clash Display + Satoshi (Fontshare) -->
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+  <!-- Devicons (tech stack) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Theme Init to prevent flash -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="cursor-dot"></div>
+  <div id="scroll-bar"></div>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="blog-page">
+    <section class="blog-hero reveal">
+      <div class="section-header-wrap">
+        <div class="sh-watermark">BLOG</div>
+        <div class="sh-label">WRITING</div>
+        <h1 class="sh-title">Words I've put on the internet.</h1>
+        <div class="sh-line"></div>
+        <p class="sh-desc">Tutorials, opinions, and deep-dives on web dev and AI/ML.</p>
+      </div>
+
+      <div class="category-filters">
+        <button class="filter-pill active interactive" data-category="All">All</button>
+        <button class="filter-pill interactive" data-category="React">React</button>
+        <button class="filter-pill interactive" data-category="AI/ML">AI/ML</button>
+        <button class="filter-pill interactive" data-category="DevOps">DevOps</button>
+        <button class="filter-pill interactive" data-category="Opinion">Opinion</button>
+      </div>
+
+      <div class="blog-grid full-grid">
+        <article class="blog-card interactive" data-category="React" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/reactperf/600/340" alt="React Server Components blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">React</span>
+          </div>
+          <div class="blog-body">
+            <h3>Why React Server Components Changed How I Build Apps</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="AI/ML" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/aidev/600/340" alt="Image Classifier blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">AI/ML</span>
+          </div>
+          <div class="blog-body">
+            <h3>Building My First Image Classifier with TensorFlow.js</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="DevOps" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/nextjs/600/340" alt="Zero-Downtime Deploy blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">DevOps</span>
+          </div>
+          <div class="blog-body">
+            <h3>Docker + GitHub Actions: My Zero-Downtime Deploy Setup</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="React" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/typescript/600/340" alt="Advanced TypeScript Patterns blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">React</span>
+          </div>
+          <div class="blog-body">
+            <h3>Advanced TypeScript Patterns for Large React Codebases</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="Opinion" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/docker/600/340" alt="Why I Stopped Using CSS Frameworks blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">Opinion</span>
+          </div>
+          <div class="blog-body">
+            <h3>Why I Stopped Using CSS Frameworks</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="Opinion" data-tilt>
+          <div class="blog-img-wrap">
+            <img src="https://picsum.photos/seed/webperf/600/340" alt="The Future of AI-Assisted Development blog post" class="blog-thumb" loading="lazy" width="600" height="340">
+            <span class="blog-cat">Opinion</span>
+          </div>
+          <div class="blog-body">
+            <h3>The Future of AI-Assisted Development</h3>
+            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <button id="back-to-top" class="interactive" aria-label="Back to top"><i class="ti ti-arrow-up"></i></button>
+
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- VanillaTilt -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+
+  <!-- Component Loader (will load main.js and blog.js) -->
+  <script src="loadComponents.js"></script>
+</body>
+</html>
