@@ -106,7 +106,7 @@
       </div>
     </section>
 
-    <section id="github" class="reveal">
+    <section id="github" class="reveal" data-github-user="Nikunj-1812">
       <div class="section-header-wrap">
         <div class="sh-watermark">GITHUB</div>
         <div class="sh-label">OPEN SOURCE</div>
@@ -117,14 +117,17 @@
 
       <div class="github-container">
         <div class="contrib-scroll">
-          <div class="contrib-grid"></div>
+          <div class="contrib-grid">
+            <div class="contrib-loading">Loading GitHub activity...</div>
+          </div>
         </div>
         <div class="github-stats">
-          <div class="g-stat"><strong>847</strong> <span>Contributions</span></div>
-          <div class="g-stat"><strong>34</strong> <span>Repos</span></div>
-          <div class="g-stat"><strong>218</strong> <span>Stars</span></div>
-          <div class="g-stat"><strong>56</strong> <span>PRs</span></div>
+          <div class="g-stat"><strong data-github-stat="contributions">--</strong> <span>Contributions</span></div>
+          <div class="g-stat"><strong data-github-stat="repos">--</strong> <span>Repos</span></div>
+          <div class="g-stat"><strong data-github-stat="stars">--</strong> <span>Stars</span></div>
+          <div class="g-stat"><strong data-github-stat="prs">--</strong> <span>PRs</span></div>
         </div>
+        <p class="github-status" id="github-status">Fetching live data from GitHub...</p>
       </div>
     </section>
 
@@ -215,7 +218,8 @@
         <button id="bot-close" class="interactive" aria-label="Close Bot"><i class="ti ti-x"></i></button>
       </div>
       <div id="bot-messages" class="bot-messages">
-        <div class="bot-message bot">Hey! I'm Nikunj's portfolio bot. Ask me about his skills, projects, or availability! 👋</div>
+        <div class="bot-message bot">Hey! 👋 I'm Nikunj's portfolio bot. Ask me about his skills, projects, experience, availability, or how to get in touch!</div>
+        <div class="bot-message bot">💡 Try: "What's his tech stack?" or "Is he available for hire?" or "Show me his projects"</div>
       </div>
       <div class="bot-input-area">
         <input type="text" id="bot-input" placeholder="Type a message..." class="interactive" aria-label="Bot message">
