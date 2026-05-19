@@ -25,6 +25,9 @@ async function loadComponents() {
         if (window.location.pathname.includes('blog.html')) {
             scriptsToLoad.push('blog.js');
         }
+        if (window.location.pathname.includes('projects.html')) {
+            scriptsToLoad.push('projects.js');
+        }
 
         for (let scriptSrc of scriptsToLoad) {
             const script = document.createElement('script');

@@ -44,6 +44,8 @@ function playClickSound() {
     console.log("Audio not supported");
   }
 }
+// expose globally so other scripts (projects.js, blog.js) can call it
+window.playClickSound = playClickSound;
 
 document.addEventListener('click', () => {
   playClickSound();
