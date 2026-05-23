@@ -116,18 +116,51 @@
       </div>
 
       <div class="github-container">
-        <div class="contrib-scroll">
-          <div class="contrib-grid">
-            <div class="contrib-loading">Loading GitHub activity...</div>
+
+        <!-- Top bar: profile link + status -->
+        <div class="github-top-bar">
+          <div class="github-profile-info">
+            <div class="github-avatar-wrap">
+              <img src="https://github.com/Nikunj-1812.png" alt="Nikunj GitHub" class="github-avatar" loading="lazy" onerror="this.src='assets/logo.png'">
+              <span class="github-online-dot"></span>
+            </div>
+            <div>
+              <div class="github-username">Nikunj-1812</div>
+              <div class="github-status-text" id="github-status">Fetching live data...</div>
+            </div>
+          </div>
+          <a href="https://github.com/Nikunj-1812" target="_blank" rel="noopener noreferrer" class="github-profile-btn interactive">
+            <i class="ti ti-brand-github"></i> View Profile
+          </a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="github-stats">
+          <div class="g-stat"><strong data-github-stat="contributions">--</strong><span>Contributions</span></div>
+          <div class="g-stat"><strong data-github-stat="repos">--</strong><span>Repos</span></div>
+        </div>
+
+        <!-- Contribution graph -->
+        <div class="contrib-graph-section">
+          <div class="contrib-graph-label">
+            <span>Contribution Activity</span>
+            <div class="contrib-legend">
+              <span>Less</span>
+              <div class="legend-cell" style="background: var(--surface)"></div>
+              <div class="legend-cell level-1"></div>
+              <div class="legend-cell level-2"></div>
+              <div class="legend-cell level-3"></div>
+              <div class="legend-cell level-4"></div>
+              <span>More</span>
+            </div>
+          </div>
+          <div class="contrib-scroll">
+            <div class="contrib-grid" aria-label="GitHub contribution graph">
+              <div class="github-empty github-empty--graph">Loading GitHub activity...</div>
+            </div>
           </div>
         </div>
-        <div class="github-stats">
-          <div class="g-stat"><strong data-github-stat="contributions">--</strong> <span>Contributions</span></div>
-          <div class="g-stat"><strong data-github-stat="repos">--</strong> <span>Repos</span></div>
-          <div class="g-stat"><strong data-github-stat="stars">--</strong> <span>Stars</span></div>
-          <div class="g-stat"><strong data-github-stat="prs">--</strong> <span>PRs</span></div>
-        </div>
-        <p class="github-status" id="github-status">Fetching live data from GitHub...</p>
+
       </div>
     </section>
 
@@ -140,37 +173,28 @@
         <p class="sh-desc">I write about things I'm learning, building, and breaking.</p>
       </div>
 
-      <div class="blog-grid">
-        <article class="blog-card interactive" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/reactperf/600/340" alt="React Server Components blog post" class="blog-thumb" loading="lazy">
-            <span class="blog-cat">React</span>
-          </div>
+      <div class="blog-grid blog-grid-listing">
+        <article class="blog-card interactive" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
           <div class="blog-body">
-            <h3>Why React Server Components Changed How I Build Apps</h3>
-            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+            <h3>Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You</h3>
+            <p>A short, practical breakdown of sneaky UI tactics, why they work, and how to spot them before you pay.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
           </div>
         </article>
 
-        <article class="blog-card interactive" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/aidev/600/340" alt="Image Classifier blog post" class="blog-thumb" loading="lazy">
-            <span class="blog-cat">AI/ML</span>
-          </div>
+        <article class="blog-card interactive" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
           <div class="blog-body">
-            <h3>Building My First Image Classifier with TensorFlow.js</h3>
-            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+            <h3>Surviving and Thriving in the AGI Era: A Comprehensive Guide to the Future Job Market</h3>
+            <p>A practical guide to the roles most affected by AGI and the skills that will matter most next.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
           </div>
         </article>
 
-        <article class="blog-card interactive" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/nextjs/600/340" alt="Zero-Downtime Deploy blog post" class="blog-thumb" loading="lazy">
-            <span class="blog-cat">DevOps</span>
-          </div>
+        <article class="blog-card interactive" data-tilt onclick="window.location.href='blog3.html'" style="cursor:pointer">
           <div class="blog-body">
-            <h3>Docker + GitHub Actions: My Zero-Downtime Deploy Setup</h3>
-            <a href="blog.html" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
+            <h3>The Future of Web Design in an AI-First World</h3>
+            <p>How designers can stay indispensable when AI automates execution and accelerates workflows.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
           </div>
         </article>
       </div>
@@ -232,6 +256,15 @@
   <div id="booking-modal" class="booking-modal">
     <div class="booking-content">
       <button class="close-booking close-modal-x interactive" aria-label="Close"><i class="ti ti-x"></i></button>
+      
+      <!-- Booking Progress Bar -->
+      <div class="booking-progress-bar">
+        <div class="booking-progress-step active" data-step="0"><span>1</span> Date & Time</div>
+        <div class="booking-progress-line"></div>
+        <div class="booking-progress-step" data-step="1"><span>2</span> Details</div>
+        <div class="booking-progress-line"></div>
+        <div class="booking-progress-step" data-step="2"><span>3</span> Done</div>
+      </div>
       
       <!-- Step 1: Calendar & Time -->
       <div id="booking-step-1" class="booking-step active">

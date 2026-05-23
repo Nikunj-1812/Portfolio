@@ -12,6 +12,23 @@ if (isTouch) {
       cursor.style.top = e.clientY + 'px';
     }
   });
+
+  // Custom cursor growth on hover (delegated to support dynamic elements)
+  document.body.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('.interactive, a, button, input, select, textarea, .project-card, .blog-card, .time-slot, .filter-pill, .social-btn, [role="button"]');
+    if (target && cursor) {
+      cursor.classList.add('cursor-grow');
+    }
+  });
+  document.body.addEventListener('mouseout', (e) => {
+    const target = e.target.closest('.interactive, a, button, input, select, textarea, .project-card, .blog-card, .time-slot, .filter-pill, .social-btn, [role="button"]');
+    if (target && cursor) {
+      const related = e.relatedTarget ? e.relatedTarget.closest('.interactive, a, button, input, select, textarea, .project-card, .blog-card, .time-slot, .filter-pill, .social-btn, [role="button"]') : null;
+      if (related !== target) {
+        cursor.classList.remove('cursor-grow');
+      }
+    }
+  });
 }
 
 // === 2. MAGNETIC BUTTONS ===
@@ -96,6 +113,29 @@ if (themeToggle) {
     playClickSound();
   });
 }
+
+// === BLOG OPENING TOAST ===
+function showBlogOpeningToast() {
+  let toast = document.getElementById('blog-opening-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'blog-opening-toast';
+    toast.className = 'blog-opening-toast';
+    toast.textContent = 'Blog is opening...';
+    document.body.appendChild(toast);
+  }
+
+  toast.classList.remove('show');
+  void toast.offsetWidth;
+  toast.classList.add('show');
+
+  clearTimeout(window.__blogOpeningToastTimer);
+  window.__blogOpeningToastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 1200);
+}
+
+window.showBlogOpeningToast = showBlogOpeningToast;
 
 
 
@@ -189,6 +229,23 @@ if (window.gsap && window.ScrollTrigger) {
 document.addEventListener('click', (e) => {
   const link = e.target.closest('a');
   if (link && link.hostname === window.location.hostname && !link.hash && link.target !== '_blank') {
+    const href = link.getAttribute('href') || '';
+    if (href.includes('blog.html') || href.includes('blog2.html')) {
+      e.preventDefault();
+      showBlogOpeningToast();
+      playClickSound();
+      setTimeout(() => {
+        if (document.startViewTransition) {
+          document.startViewTransition(() => {
+            window.location.href = link.href;
+          });
+        } else {
+          window.location.href = link.href;
+        }
+      }, 550);
+      return;
+    }
+
     e.preventDefault();
     const targetUrl = link.href;
     
@@ -219,13 +276,8 @@ window.addEventListener('scroll', () => {
   if (scrollBar) {
     scrollBar.style.width = `${(scrollY / docHeight) * 100}%`;
   }
-  
   if (navbar) {
-    if (scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    navbar.classList.toggle('scrolled', scrollY > 50);
   }
 });
 
@@ -233,44 +285,93 @@ window.addEventListener('scroll', () => {
 const backToTop = document.getElementById('back-to-top');
 if (backToTop) {
   window.addEventListener('scroll', () => {
-    if (window.scrollY >= 300) {
-      backToTop.style.opacity = '1';
-      backToTop.style.pointerEvents = 'auto';
-      backToTop.style.transform = 'translateY(0)';
-    } else {
-      backToTop.style.opacity = '0';
-      backToTop.style.pointerEvents = 'none';
-      backToTop.style.transform = 'translateY(20px)';
-    }
+    const show = window.scrollY >= 300;
+    backToTop.style.opacity = show ? '1' : '0';
+    backToTop.style.pointerEvents = show ? 'auto' : 'none';
+    backToTop.style.transform = show ? 'translateY(0)' : 'translateY(20px)';
   });
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// Active Nav Indicator
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-links a');
+// === ACTIVE NAV INDICATOR ===
+const navLinksContainer = document.querySelector('.nav-links');
 const navIndicator = document.createElement('div');
 navIndicator.className = 'nav-indicator';
-const navLinksContainer = document.querySelector('.nav-links');
 if (navLinksContainer) navLinksContainer.appendChild(navIndicator);
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if(link.getAttribute('href') === `#${entry.target.id}`) {
-          link.classList.add('active');
-          navIndicator.style.width = `${link.offsetWidth}px`;
-          navIndicator.style.left = `${link.offsetLeft}px`;
-        }
+function setActiveNavLink(link) {
+  document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+  if (!link) return;
+  link.classList.add('active');
+  // slide the pill indicator
+  navIndicator.style.width  = link.offsetWidth + 'px';
+  navIndicator.style.left   = link.offsetLeft + 'px';
+  navIndicator.style.opacity = '1';
+}
+
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+const isIndexPage = currentPath === 'index.html' || currentPath === '';
+
+if (isIndexPage) {
+  // Scroll-spy: watch all sections, fire when they cross the middle of the viewport
+  function runScrollSpy() {
+    const allSections = document.querySelectorAll('section[id]');
+    if (!allSections.length) return;
+
+    const navLinkEls = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      // pick the entry that is intersecting AND closest to top
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+      if (!visible.length) return;
+      const id = visible[0].target.id;
+
+      const match = [...navLinkEls].find(l => {
+        const href = l.getAttribute('href') || '';
+        // match  "#home"  OR  "index.html#home"
+        return href.endsWith(`#${id}`);
       });
-    }
+      if (match) setActiveNavLink(match);
+    }, {
+      threshold: 0,
+      rootMargin: '-40% 0px -55% 0px'   // fires when section centre crosses viewport centre
+    });
+
+    allSections.forEach(sec => observer.observe(sec));
+
+    // Set initial active on page load (no scroll yet)
+    const homeLink = [...navLinkEls].find(l => (l.getAttribute('href') || '').endsWith('#home'));
+    if (homeLink) requestAnimationFrame(() => setActiveNavLink(homeLink));
+  }
+
+  // Sections may be injected by loadComponents — wait for them
+  if (document.querySelectorAll('section[id]').length >= 2) {
+    runScrollSpy();
+  } else {
+    // Poll until dynamic sections are in the DOM
+    const waitForSections = setInterval(() => {
+      if (document.querySelectorAll('section[id]').length >= 2) {
+        clearInterval(waitForSections);
+        runScrollSpy();
+      }
+    }, 100);
+  }
+
+} else {
+  // Non-index pages: highlight by filename
+  const navLinkEls = document.querySelectorAll('.nav-links a');
+  const match = [...navLinkEls].find(l => {
+    const href = (l.getAttribute('href') || '').split('#')[0].split('/').pop();
+    return href === currentPath;
   });
-}, { threshold: 0.5 });
-sections.forEach(sec => observer.observe(sec));
+  if (match) requestAnimationFrame(() => setActiveNavLink(match));
+}
+
+// Mobile Nav
+
 
 // Mobile Nav
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -833,6 +934,16 @@ if (bookCallBtn && bookingModal) {
         } else {
           step.classList.remove('active');
         }
+      }
+    });
+
+    // Update progress bar indicator
+    const progressSteps = document.querySelectorAll('.booking-progress-step');
+    progressSteps.forEach((pStep, i) => {
+      if (i <= index) {
+        pStep.classList.add('active');
+      } else {
+        pStep.classList.remove('active');
       }
     });
   }

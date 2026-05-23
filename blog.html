@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | Nikunj Sorathiya</title>
-  <meta name="description" content="Tutorials, opinions, and deep-dives on web dev and AI/ML.">
+  <meta name="description" content="All blog posts by Nikunj Sorathiya, including dark patterns and AGI-era career strategy.">
   <meta name="theme-color" content="#0D0D0D">
   <!-- Clash Display + Satoshi (Fontshare) -->
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
@@ -32,88 +32,43 @@
 
   <main class="blog-page">
     <section class="blog-hero reveal">
-      <div class="section-header-wrap">
+      <div class="section-header-wrap blog-hero-wrap">
         <div class="sh-watermark">BLOG</div>
         <div class="sh-label">WRITING</div>
-        <h1 class="sh-title">Words I've put on the internet.</h1>
+        <h1 class="sh-title">All blog posts and deep dives.</h1>
         <div class="sh-line"></div>
-        <p class="sh-desc">Tutorials, opinions, and deep-dives on web dev and AI/ML.</p>
+        <p class="sh-desc">Tutorials, opinions, and long-form breakdowns on design, AI, and the future of work.</p>
       </div>
 
-      <div class="category-filters">
-        <button class="filter-pill active interactive" data-category="All">All</button>
-        <button class="filter-pill interactive" data-category="React">React</button>
-        <button class="filter-pill interactive" data-category="AI/ML">AI/ML</button>
-        <button class="filter-pill interactive" data-category="DevOps">DevOps</button>
-        <button class="filter-pill interactive" data-category="Opinion">Opinion</button>
+
+      <div class="blog-grid blog-grid-listing">
+        <article class="blog-card interactive" data-category="Design" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
+          <div class="blog-body">
+            <h3>Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You</h3>
+            <p>A simple breakdown of deceptive UI tricks, why they work, and how to protect yourself in everyday apps.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="AI" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
+          <div class="blog-body">
+            <h3>Surviving and Thriving in the AGI Era: A Comprehensive Guide to the Future Job Market</h3>
+            <p>A practical guide to the roles most affected by AGI and the skills that will matter most next.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </article>
+
+        <article class="blog-card interactive" data-category="Opinion" data-tilt onclick="window.location.href='blog3.html'" style="cursor:pointer">
+          <div class="blog-body">
+            <h3>The Future of Web Design in an AI-First World</h3>
+            <p>How designers can stay indispensable when AI automates execution and accelerates workflows.</p>
+            <span class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </article>
       </div>
 
-      <div class="blog-grid full-grid">
-        <article class="blog-card interactive" data-category="React" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/reactperf/600/340" alt="React Server Components blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">React</span>
-          </div>
-          <div class="blog-body">
-            <h3>Why React Server Components Changed How I Build Apps</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="blog-card interactive" data-category="AI/ML" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/aidev/600/340" alt="Image Classifier blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">AI/ML</span>
-          </div>
-          <div class="blog-body">
-            <h3>Building My First Image Classifier with TensorFlow.js</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="blog-card interactive" data-category="DevOps" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/nextjs/600/340" alt="Zero-Downtime Deploy blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">DevOps</span>
-          </div>
-          <div class="blog-body">
-            <h3>Docker + GitHub Actions: My Zero-Downtime Deploy Setup</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="blog-card interactive" data-category="React" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/typescript/600/340" alt="Advanced TypeScript Patterns blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">React</span>
-          </div>
-          <div class="blog-body">
-            <h3>Advanced TypeScript Patterns for Large React Codebases</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="blog-card interactive" data-category="Opinion" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/docker/600/340" alt="Why I Stopped Using CSS Frameworks blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">Opinion</span>
-          </div>
-          <div class="blog-body">
-            <h3>Why I Stopped Using CSS Frameworks</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="blog-card interactive" data-category="Opinion" data-tilt>
-          <div class="blog-img-wrap">
-            <img src="https://picsum.photos/seed/webperf/600/340" alt="The Future of AI-Assisted Development blog post" class="blog-thumb" loading="lazy" width="600" height="340">
-            <span class="blog-cat">Opinion</span>
-          </div>
-          <div class="blog-body">
-            <h3>The Future of AI-Assisted Development</h3>
-            <a href="#" class="read-more interactive">Read Post <i class="ti ti-arrow-right"></i></a>
-          </div>
-        </article>
+      <div class="center-btn">
+        <a href="index.html#blog-preview" class="btn-secondary interactive">Back to Home <i class="ti ti-arrow-right"></i></a>
       </div>
     </section>
   </main>
