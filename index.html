@@ -9,6 +9,8 @@
   <meta property="og:description" content="Full Stack Web Developer & AI/ML enthusiast building scalable web apps and intelligent systems.">
   <meta property="og:image" content="https://picsum.photos/seed/portfolio/1200/630">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/logo.png?v=2" sizes="any">
+  <link rel="shortcut icon" type="image/png" href="assets/logo.png?v=2">
   
   <!-- Clash Display + Satoshi (Fontshare) -->
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
@@ -22,7 +24,7 @@
   <!-- Theme Init to prevent flash -->
   <script>
     (function() {
-      var theme = localStorage.getItem('theme') || 'dark';
+      const theme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
@@ -51,51 +53,51 @@
       <div class="projects-grid">
         <article class="project-card interactive" data-tilt>
           <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/webdev/600/340" alt="DevFlow project" class="project-img" loading="lazy">
+            <img src="https://picsum.photos/seed/whiteboard/600/340" alt="Collaborative Whiteboard" class="project-img" loading="lazy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span>TypeScript</span><span>React</span><span>Socket.io</span>
+            </div>
+            <h3>Collaborative Whiteboard</h3>
+            <p>A real-time collaborative whiteboard where multiple users can draw and annotate together with live sync.</p>
+            <div class="project-links">
+              <a href="https://collabrative-white-board-niknujs-projects.vercel.app/boards" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="https://github.com/Nikunj-1812/Collabrative-WhiteBoard" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt>
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/cinematch/600/340" alt="CineMatch" class="project-img" loading="lazy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span>Python</span><span>ML</span><span>React</span>
+            </div>
+            <h3>CineMatch</h3>
+            <p>A movie recommendation system that suggests films based on your taste using content-based ML filtering.</p>
+            <div class="project-links">
+              <a href="https://cinematch-six-sandy.vercel.app/" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="https://github.com/Nikunj-1812/Cinematch" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt>
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/travelloop/600/340" alt="TravelLoop" class="project-img" loading="lazy">
           </div>
           <div class="project-body">
             <div class="project-tags">
               <span>React</span><span>Node.js</span><span>MongoDB</span>
             </div>
-            <h3>DevFlow</h3>
-            <p>A real-time project management SaaS with drag-and-drop boards, team collaboration, and Slack integration.</p>
+            <h3>TravelLoop</h3>
+            <p>A travel planning web app to discover destinations, build itineraries, and organize trips seamlessly.</p>
             <div class="project-links">
-              <a href="projects.html" class="interactive"><i class="ti ti-arrow-right"></i> View Details</a>
-              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card interactive" data-tilt>
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/aiml/600/340" alt="NeuralVision project" class="project-img" loading="lazy">
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span>Python</span><span>FastAPI</span><span>TensorFlow</span>
-            </div>
-            <h3>NeuralVision</h3>
-            <p>An AI image classification API that detects objects in real-time using a custom-trained CNN model.</p>
-            <div class="project-links">
-              <a href="projects.html" class="interactive"><i class="ti ti-arrow-right"></i> View Details</a>
-              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card interactive" data-tilt>
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/saas/600/340" alt="ShopSense project" class="project-img" loading="lazy">
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span>Next.js</span><span>PostgreSQL</span><span>Stripe</span>
-            </div>
-            <h3>ShopSense</h3>
-            <p>A full-stack e-commerce platform with AI-powered product recommendations and real-time inventory.</p>
-            <div class="project-links">
-              <a href="projects.html" class="interactive"><i class="ti ti-arrow-right"></i> View Details</a>
-              <a href="#" class="interactive"><i class="ti ti-brand-github"></i> GitHub</a>
+              <a href="https://travel-loop-phi.vercel.app/" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i> Live Demo</a>
+              <a href="https://github.com/Nikunj-1812/TravelLoop" class="interactive" target="_blank" rel="noopener noreferrer"><i class="ti ti-brand-github"></i> GitHub</a>
             </div>
           </div>
         </article>
@@ -122,11 +124,10 @@
           <div class="github-profile-info">
             <div class="github-avatar-wrap">
               <img src="https://github.com/Nikunj-1812.png" alt="Nikunj GitHub" class="github-avatar" loading="lazy" onerror="this.src='assets/logo.png'">
-              <span class="github-online-dot"></span>
+              <span class="github-online-dot" id="github-online-dot" data-tooltip="Active on GitHub"></span>
             </div>
             <div>
               <div class="github-username">Nikunj-1812</div>
-              <div class="github-status-text" id="github-status">Fetching live data...</div>
             </div>
           </div>
           <a href="https://github.com/Nikunj-1812" target="_blank" rel="noopener noreferrer" class="github-profile-btn interactive">
@@ -144,7 +145,8 @@
         <div class="contrib-graph-section">
           <div class="contrib-graph-label">
             <span>Contribution Activity</span>
-            <div class="contrib-legend">
+            <div style="display:flex; align-items:center; gap:0.75rem">
+              <div class="contrib-legend">
               <span>Less</span>
               <div class="legend-cell" style="background: var(--surface)"></div>
               <div class="legend-cell level-1"></div>
@@ -152,6 +154,11 @@
               <div class="legend-cell level-3"></div>
               <div class="legend-cell level-4"></div>
               <span>More</span>
+              </div>
+              <div class="contrib-controls">
+                <label for="contrib-year-select" class="sr-only">Select year</label>
+                <select id="contrib-year-select" class="interactive"></select>
+              </div>
             </div>
           </div>
           <div class="contrib-scroll">
@@ -174,7 +181,7 @@
       </div>
 
       <div class="blog-grid blog-grid-listing">
-        <article class="blog-card interactive" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
+        <article class="blog-card interactive" data-tilt onclick="window.location.href='blog1.html'" style="cursor:pointer">
           <div class="blog-body">
             <h3>Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You</h3>
             <p>A short, practical breakdown of sneaky UI tactics, why they work, and how to spot them before you pay.</p>
@@ -229,6 +236,16 @@
     </div>
   </main>
 
+  <section class="site-quote" aria-label="Quote">
+    <div class="site-quote-inner">
+      <span class="site-quote-mark" aria-hidden="true">"</span>
+      <blockquote class="site-quote-text">
+        <p>The people who are crazy enough to think they can change the world are the ones who do.</p>
+      </blockquote>
+      <p class="site-quote-author">— Steve Jobs</p>
+    </div>
+  </section>
+
   <div id="footer-placeholder"></div>
 
   <div class="bot-container">
@@ -242,8 +259,8 @@
         <button id="bot-close" class="interactive" aria-label="Close Bot"><i class="ti ti-x"></i></button>
       </div>
       <div id="bot-messages" class="bot-messages">
-        <div class="bot-message bot">Hey! 👋 I'm Nikunj's portfolio bot. Ask me about his skills, projects, experience, availability, or how to get in touch!</div>
-        <div class="bot-message bot">💡 Try: "What's his tech stack?" or "Is he available for hire?" or "Show me his projects"</div>
+        <div class="bot-message bot">Hey! 👋 I'm Nikunj's portfolio bot. Ask naturally about his skills, projects, experience, availability, or contact details.</div>
+        <div class="bot-message bot">I remember context as we chat, so follow-up questions like "tell me more" or "what about backend?" work too.</div>
       </div>
       <div class="bot-input-area">
         <input type="text" id="bot-input" placeholder="Type a message..." class="interactive" aria-label="Bot message">
@@ -321,15 +338,15 @@
           <label>Additional Notes</label>
           <textarea id="b-notes" placeholder="What would you like to discuss?" class="b-input interactive"></textarea>
           <button id="confirm-booking-btn" class="btn-primary w-100 interactive mt-2">Confirm Booking</button>
+          <div id="booking-status-message" class="booking-status-message" aria-live="polite"></div>
         </div>
       </div>
 
       <!-- Step 3: Success -->
       <div id="booking-step-3" class="booking-step text-center">
         <div class="b-success-icon"><i class="ti ti-check"></i></div>
-        <h3 class="b-title">Booking Confirmed!</h3>
-        <p class="b-desc">Thank you, <span id="success-name"></span>! A calendar invitation has been sent to <span id="success-email"></span>.</p>
-        <button class="btn-secondary w-100 interactive mt-4 close-booking">Close Window</button>
+        <h3 class="b-title">Thank you!</h3>
+        <button class="btn-secondary w-100 interactive mt-3 close-booking">Close Window</button>
       </div>
 
     </div>

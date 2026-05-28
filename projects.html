@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Nikunj Sorathiya</title>
   <meta name="description" content="All projects built by Nikunj Sorathiya — full-stack apps, AI tools, and more.">
+  <link rel="icon" type="image/png" href="assets/logo.png?v=2" sizes="any">
+  <link rel="shortcut icon" type="image/png" href="assets/logo.png?v=2">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <script>
     (function() {
-      var theme = localStorage.getItem('theme') || 'dark';
+      const theme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
@@ -34,166 +36,113 @@
       <div class="projects-grid">
 
         <article class="project-card interactive" data-tilt
-          data-id="devflow"
-          data-title="DevFlow"
-          data-tags="React,Node.js,MongoDB,Socket.io"
-          data-img="https://picsum.photos/seed/webdev/1200/680"
-          data-desc="A real-time project management SaaS with drag-and-drop boards, team collaboration, and Slack integration. Built for teams that move fast."
-          data-long="DevFlow is a full-stack SaaS application designed to streamline project management for development teams. It features real-time drag-and-drop Kanban boards powered by Socket.io, team workspaces with role-based access control, Slack webhook integration for notifications, and a rich activity feed. The backend is built with Node.js and Express, using MongoDB for flexible document storage. The frontend is a React SPA with optimistic UI updates for a snappy feel."
-          data-live="#"
-          data-github="#">
+          data-id="collabwhiteboard"
+          data-title="Collaborative Whiteboard"
+          data-tags="TypeScript,React,Socket.io,Node.js"
+          data-img="https://picsum.photos/seed/whiteboard/1200/680"
+          data-desc="A real-time collaborative whiteboard where multiple users can draw, annotate, and brainstorm together simultaneously."
+          data-long="Built a real-time collaborative whiteboard application using TypeScript, enabling multiple users to draw, annotate, and collaborate simultaneously with live sync functionality. The app features freehand drawing, shape tools, text annotations, and instant synchronization across all connected clients via Socket.io. Designed for remote teams to brainstorm and visualize ideas together in real time."
+          data-live="https://collabrative-white-board-niknujs-projects.vercel.app/boards"
+          data-github="https://github.com/Nikunj-1812/Collabrative-WhiteBoard">
           <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/webdev/600/340" alt="DevFlow" class="project-img" loading="lazy">
+            <img src="https://picsum.photos/seed/whiteboard/600/340" alt="Collaborative Whiteboard" class="project-img" loading="lazy">
+            <div class="project-card-overlay">
+              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags"><span>TypeScript</span><span>React</span><span>Socket.io</span></div>
+            <h3>Collaborative Whiteboard</h3>
+            <p>A real-time collaborative whiteboard where multiple users can draw and annotate together with live sync.</p>
+            <div class="project-links">
+              <a href="https://collabrative-white-board-niknujs-projects.vercel.app/boards" class="project-icon-btn interactive" title="Live Demo" aria-label="Open live demo for Collaborative Whiteboard" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
+              <a href="https://github.com/Nikunj-1812/Collabrative-WhiteBoard" class="project-icon-btn interactive" title="GitHub" aria-label="Open source code for Collaborative Whiteboard" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
+              <button class="project-icon-btn project-detail-btn interactive" title="View Details" aria-label="View details for Collaborative Whiteboard"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt
+          data-id="chatify"
+          data-title="Chatify"
+          data-tags="MongoDB,Express,React,Node.js"
+          data-img="https://picsum.photos/seed/chatify/1200/680"
+          data-desc="A real-time full-stack chat application built with the MERN stack featuring user authentication and instant messaging."
+          data-long="Chatify is a full-stack real-time chat application built with the MERN stack — MongoDB, Express.js, React, and Node.js. It features user authentication with JWT, instant messaging powered by Socket.io, online/offline status indicators, and a clean responsive UI. Users can sign up, log in, and chat with other registered users in real time. Deployed on Render for live access."
+          data-live="https://chatify-6aic.onrender.com"
+          data-github="https://github.com/Nikunj-1812/Chatify">
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/chatify/600/340" alt="Chatify" class="project-img" loading="lazy">
+            <div class="project-card-overlay">
+              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags"><span>MongoDB</span><span>React</span><span>Socket.io</span></div>
+            <h3>Chatify</h3>
+            <p>A real-time MERN stack chat app with user authentication, instant messaging, and online status.</p>
+            <div class="project-links">
+              <a href="https://chatify-6aic.onrender.com" class="project-icon-btn interactive" title="Live Demo" aria-label="Open live demo for Chatify" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
+              <a href="https://github.com/Nikunj-1812/Chatify" class="project-icon-btn interactive" title="GitHub" aria-label="Open source code for Chatify" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
+              <button class="project-icon-btn project-detail-btn interactive" title="View Details" aria-label="View details for Chatify"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card interactive" data-tilt
+          data-id="travelloop"
+          data-title="TravelLoop"
+          data-tags="React,Node.js,MongoDB,Tailwind"
+          data-img="https://picsum.photos/seed/travelloop/1200/680"
+          data-desc="A travel planning web app that helps users discover destinations, plan itineraries, and organize trips seamlessly."
+          data-long="TravelLoop is a full-stack travel planning application that lets users explore destinations, build custom itineraries, and manage their trips in one place. Built with React on the frontend and Node.js with MongoDB on the backend, it features destination search, trip organization, and a clean responsive UI styled with Tailwind CSS. Deployed on Vercel for fast, global access."
+          data-live="https://travel-loop-phi.vercel.app/"
+          data-github="https://github.com/Nikunj-1812/TravelLoop">
+          <div class="project-img-wrap">
+            <img src="https://picsum.photos/seed/travelloop/600/340" alt="TravelLoop" class="project-img" loading="lazy">
             <div class="project-card-overlay">
               <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
             </div>
           </div>
           <div class="project-body">
             <div class="project-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
-            <h3>DevFlow</h3>
-            <p>A real-time project management SaaS with drag-and-drop boards, team collaboration, and Slack integration.</p>
+            <h3>TravelLoop</h3>
+            <p>A travel planning web app to discover destinations, build itineraries, and organize trips seamlessly.</p>
             <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
+              <a href="https://travel-loop-phi.vercel.app/" class="project-icon-btn interactive" title="Live Demo" aria-label="Open live demo for TravelLoop" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
+              <a href="https://github.com/Nikunj-1812/TravelLoop" class="project-icon-btn interactive" title="GitHub" aria-label="Open source code for TravelLoop" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
+              <button class="project-icon-btn project-detail-btn interactive" title="View Details" aria-label="View details for TravelLoop"><i class="ti ti-eye"></i></button>
             </div>
           </div>
         </article>
 
         <article class="project-card interactive" data-tilt
-          data-id="neuralvision"
-          data-title="NeuralVision"
-          data-tags="Python,FastAPI,TensorFlow,Docker"
-          data-img="https://picsum.photos/seed/aiml/1200/680"
-          data-desc="An AI image classification API that detects objects in real-time using a custom-trained CNN model deployed via FastAPI."
-          data-long="NeuralVision is a production-ready AI API that performs real-time object detection and image classification. The core model is a custom Convolutional Neural Network trained on a curated dataset using TensorFlow. The API is built with FastAPI for high-performance async request handling, containerized with Docker for easy deployment, and includes a rate-limiting layer and API key authentication. The model achieves 94% accuracy on the test set."
-          data-live="#"
-          data-github="#">
+          data-id="cinematch"
+          data-title="CineMatch"
+          data-tags="Python,Machine Learning,React,Flask"
+          data-img="https://picsum.photos/seed/cinematch/1200/680"
+          data-desc="A movie recommendation system that suggests films based on your taste using content-based filtering and ML algorithms."
+          data-long="CineMatch is an AI-powered movie recommendation system built with Python and Machine Learning. It uses content-based filtering to analyze movie metadata — genres, cast, crew, and keywords — and recommends similar titles based on user input. The frontend is built with React for a smooth browsing experience, while the backend is powered by Flask serving a trained similarity model. The system processes a dataset of thousands of movies to deliver accurate, personalized recommendations instantly."
+          data-live="https://cinematch-six-sandy.vercel.app/"
+          data-github="https://github.com/Nikunj-1812/Cinematch">
           <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/aiml/600/340" alt="NeuralVision" class="project-img" loading="lazy">
+            <img src="https://picsum.photos/seed/cinematch/600/340" alt="CineMatch" class="project-img" loading="lazy">
             <div class="project-card-overlay">
               <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
             </div>
           </div>
           <div class="project-body">
-            <div class="project-tags"><span>Python</span><span>FastAPI</span><span>TensorFlow</span></div>
-            <h3>NeuralVision</h3>
-            <p>An AI image classification API that detects objects in real-time using a custom-trained CNN model.</p>
+            <div class="project-tags"><span>Python</span><span>ML</span><span>React</span></div>
+            <h3>CineMatch</h3>
+            <p>A movie recommendation system that suggests films based on your taste using content-based ML filtering.</p>
             <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
+              <a href="https://cinematch-six-sandy.vercel.app/" class="project-icon-btn interactive" title="Live Demo" aria-label="Open live demo for CineMatch" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
+              <a href="https://github.com/Nikunj-1812/Cinematch" class="project-icon-btn interactive" title="GitHub" aria-label="Open source code for CineMatch" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
+              <button class="project-icon-btn project-detail-btn interactive" title="View Details" aria-label="View details for CineMatch"><i class="ti ti-eye"></i></button>
             </div>
           </div>
         </article>
 
-        <article class="project-card interactive" data-tilt
-          data-id="shopsense"
-          data-title="ShopSense"
-          data-tags="Next.js,PostgreSQL,Stripe,Prisma"
-          data-img="https://picsum.photos/seed/saas/1200/680"
-          data-desc="A full-stack e-commerce platform with AI-powered product recommendations and real-time inventory management."
-          data-long="ShopSense is a modern e-commerce platform built with Next.js 14 App Router, featuring server-side rendering for SEO, Stripe for secure payments, and a PostgreSQL database managed via Prisma ORM. The standout feature is an AI recommendation engine that analyzes browsing history and purchase patterns to surface relevant products. It also includes a real-time inventory dashboard, order tracking, and an admin panel for product management."
-          data-live="#"
-          data-github="#">
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/saas/600/340" alt="ShopSense" class="project-img" loading="lazy">
-            <div class="project-card-overlay">
-              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags"><span>Next.js</span><span>PostgreSQL</span><span>Stripe</span></div>
-            <h3>ShopSense</h3>
-            <p>A full-stack e-commerce platform with AI-powered product recommendations and real-time inventory.</p>
-            <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card interactive" data-tilt
-          data-id="chatbase"
-          data-title="ChatBase"
-          data-tags="React,OpenAI,Node.js,Redis"
-          data-img="https://picsum.photos/seed/chatbase/1200/680"
-          data-desc="A customizable AI chatbot builder that lets businesses embed a trained assistant on their website in minutes."
-          data-long="ChatBase allows businesses to upload their documentation, FAQs, or any text content and instantly get a trained AI chatbot powered by OpenAI's GPT API. The platform features a drag-and-drop widget customizer, conversation analytics, multi-language support, and a REST API for headless integration. Built with React on the frontend, Node.js backend, and Redis for session caching and rate limiting."
-          data-live="#"
-          data-github="#">
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/chatbase/600/340" alt="ChatBase" class="project-img" loading="lazy">
-            <div class="project-card-overlay">
-              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags"><span>React</span><span>OpenAI</span><span>Node.js</span></div>
-            <h3>ChatBase</h3>
-            <p>A customizable AI chatbot builder that lets businesses embed a trained assistant on their website in minutes.</p>
-            <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card interactive" data-tilt
-          data-id="codesynth"
-          data-title="CodeSynth"
-          data-tags="TypeScript,Next.js,OpenAI,Tailwind"
-          data-img="https://picsum.photos/seed/codesynth/1200/680"
-          data-desc="An AI-powered code generation tool that converts natural language descriptions into production-ready code snippets."
-          data-long="CodeSynth is a developer productivity tool that uses OpenAI's API to generate, explain, and refactor code from plain English prompts. It supports 20+ programming languages, has a built-in Monaco editor for live editing, syntax highlighting, and one-click copy. The app is built with Next.js and TypeScript, styled with Tailwind CSS, and uses streaming API responses for a real-time typing effect."
-          data-live="#"
-          data-github="#">
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/codesynth/600/340" alt="CodeSynth" class="project-img" loading="lazy">
-            <div class="project-card-overlay">
-              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags"><span>TypeScript</span><span>Next.js</span><span>OpenAI</span></div>
-            <h3>CodeSynth</h3>
-            <p>An AI-powered code generation tool that converts natural language descriptions into production-ready code.</p>
-            <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card interactive" data-tilt
-          data-id="trackify"
-          data-title="Trackify"
-          data-tags="React Native,Node.js,MongoDB,Maps"
-          data-img="https://picsum.photos/seed/trackify/1200/680"
-          data-desc="A cross-platform fitness tracking app with GPS route recording, workout analytics, and social challenges."
-          data-long="Trackify is a React Native mobile app for fitness enthusiasts. It records GPS routes in real-time using the device's location API, visualizes workout data with interactive charts, and lets users set goals and join social challenges with friends. The backend is a Node.js REST API with MongoDB, and push notifications are handled via Firebase Cloud Messaging. The app is available on both iOS and Android."
-          data-live="#"
-          data-github="#">
-          <div class="project-img-wrap">
-            <img src="https://picsum.photos/seed/trackify/600/340" alt="Trackify" class="project-img" loading="lazy">
-            <div class="project-card-overlay">
-              <span class="project-view-btn"><i class="ti ti-eye"></i> View Details</span>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags"><span>React Native</span><span>Node.js</span><span>MongoDB</span></div>
-            <h3>Trackify</h3>
-            <p>A cross-platform fitness tracking app with GPS route recording, workout analytics, and social challenges.</p>
-            <div class="project-links">
-              <a href="#" class="project-icon-btn interactive" title="Live Demo" onclick="event.stopPropagation()"><i class="ti ti-external-link"></i></a>
-              <a href="#" class="project-icon-btn interactive" title="GitHub" onclick="event.stopPropagation()"><i class="ti ti-brand-github"></i></a>
-              <button class="project-icon-btn project-detail-btn interactive" title="View Details"><i class="ti ti-eye"></i></button>
-            </div>
-          </div>
-        </article>
 
       </div>
     </section>

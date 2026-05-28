@@ -56,9 +56,8 @@ function playClickSound() {
   if (!soundEnabled) return;
   try {
     clickAudio.currentTime = 0;
-    clickAudio.play().catch(e => console.log("Audio play failed:", e));
+    clickAudio.play().catch(() => {});
   } catch (e) {
-    console.log("Audio not supported");
   }
 }
 // expose globally so other scripts (projects.js, blog.js) can call it
@@ -376,27 +375,32 @@ if (isIndexPage) {
 // Mobile Nav
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const navOverlay = document.querySelector('.nav-overlay');
+const navBackdrop = document.querySelector('.nav-backdrop');
 const navOverlayLinks = document.querySelectorAll('.nav-overlay a');
+
+function closeMobileNav() {
+  navOverlay.classList.remove('active');
+  if (navBackdrop) navBackdrop.classList.remove('active');
+  mobileMenuBtn.querySelector('i').className = 'ti ti-menu-2';
+  document.body.style.overflow = '';
+}
 
 if (mobileMenuBtn && navOverlay) {
   mobileMenuBtn.addEventListener('click', () => {
-    navOverlay.classList.toggle('active');
+    const isOpen = navOverlay.classList.toggle('active');
+    if (navBackdrop) navBackdrop.classList.toggle('active', isOpen);
     const icon = mobileMenuBtn.querySelector('i');
-    if (navOverlay.classList.contains('active')) {
-      icon.className = 'ti ti-x';
-      document.body.style.overflow = 'hidden';
-    } else {
-      icon.className = 'ti ti-menu-2';
-      document.body.style.overflow = '';
-    }
+    icon.className = isOpen ? 'ti ti-x' : 'ti ti-menu-2';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
+  // Close on backdrop click
+  if (navBackdrop) {
+    navBackdrop.addEventListener('click', closeMobileNav);
+  }
+
   navOverlayLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      navOverlay.classList.remove('active');
-      mobileMenuBtn.querySelector('i').className = 'ti ti-menu-2';
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeMobileNav);
   });
 }
 
@@ -449,28 +453,53 @@ if (contribGrid && githubSection) {
     const prCount = Number.isFinite(prsData?.total_count) ? prsData.total_count : fallbackStats.prs;
 
     const contributionDays = Array.isArray(contributionData?.contributions) ? contributionData.contributions : [];
-    if (contributionDays.length) {
-      const firstDate = contributionDays[0]?.date ? new Date(`${contributionDays[0].date}T00:00:00`) : null;
-      const leadingEmptyDays = firstDate ? firstDate.getDay() : 0;
-      const trailingEmptyDays = (7 - ((leadingEmptyDays + contributionDays.length) % 7)) % 7;
-      const cells = [];
 
-      for (let i = 0; i < leadingEmptyDays; i++) {
-        cells.push('<div class="contrib-day empty" aria-hidden="true"></div>');
+    // Render a filtered set of days for a specific year
+    function renderYear(year) {
+      const daysForYear = contributionDays.filter(d => d.date && d.date.startsWith(`${year}-`));
+      if (!daysForYear.length) {
+        contribGrid.innerHTML = '<div class="github-fallback">No contribution data for this year.</div>';
+        return;
       }
 
-      contributionDays.forEach(day => {
+      // Sort by date ascending to preserve weekly layout
+      daysForYear.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      const firstDate = daysForYear[0] ? new Date(`${daysForYear[0].date}T00:00:00`) : null;
+      const leadingEmptyDays = firstDate ? firstDate.getDay() : 0;
+      const trailingEmptyDays = (7 - ((leadingEmptyDays + daysForYear.length) % 7)) % 7;
+      const cells = [];
+
+      for (let i = 0; i < leadingEmptyDays; i++) cells.push('<div class="contrib-day empty" aria-hidden="true"></div>');
+
+      daysForYear.forEach(day => {
         cells.push(`<div class="contrib-day level-${day.level}" title="${day.date}: ${day.count} contributions" aria-label="${day.date}: ${day.count} contributions"></div>`);
       });
 
-      for (let i = 0; i < trailingEmptyDays; i++) {
-        cells.push('<div class="contrib-day empty" aria-hidden="true"></div>');
-      }
+      for (let i = 0; i < trailingEmptyDays; i++) cells.push('<div class="contrib-day empty" aria-hidden="true"></div>');
 
       contribGrid.innerHTML = cells.join('');
-      if (statusEl) {
-        statusEl.textContent = `Live GitHub data for @${githubUser}`;
-      }
+      const dotEl = document.getElementById('github-online-dot');
+      if (dotEl) dotEl.setAttribute('data-tooltip', `Live · @${githubUser}`);
+      // update the contribution stat to the selected year total if available
+      const yearTotal = contributionData?.total?.[year] ?? null;
+      if (yearTotal !== null && yearTotal !== undefined) setStat('contributions', Number(yearTotal));
+    }
+
+    // Populate year selector (if present) and initialize
+    const yearSelect = document.getElementById('contrib-year-select');
+    const availableYears = contributionData && contributionData.total ? Object.keys(contributionData.total).map(y => Number(y)).sort((a,b) => b - a) : [new Date().getFullYear()];
+    if (yearSelect) {
+      yearSelect.innerHTML = availableYears.map(y => `<option value="${y}">${y}</option>`).join('');
+      yearSelect.addEventListener('change', (e) => {
+        renderYear(Number(e.target.value));
+      });
+    }
+
+    if (contributionDays.length) {
+      const initYear = availableYears[0] || new Date().getFullYear();
+      if (yearSelect) yearSelect.value = initYear;
+      renderYear(initYear);
     } else {
       contribGrid.innerHTML = `
         <div class="github-fallback">
@@ -478,9 +507,8 @@ if (contribGrid && githubSection) {
           <a href="https://github.com/${encodeURIComponent(githubUser)}" target="_blank" rel="noopener noreferrer">View the profile on GitHub</a>
         </div>
       `;
-      if (statusEl) {
-        statusEl.textContent = `Showing cached GitHub totals for @${githubUser}`;
-      }
+      const dotEl2 = document.getElementById('github-online-dot');
+      if (dotEl2) dotEl2.setAttribute('data-tooltip', `Active on GitHub`);
     }
 
     setStat('contributions', contributions);
@@ -500,9 +528,8 @@ if (contribGrid && githubSection) {
     setStat('stars', fallbackStats.stars);
     setStat('prs', fallbackStats.prs);
 
-    if (statusEl) {
-      statusEl.textContent = `Showing cached GitHub totals for @${githubUser}`;
-    }
+    const dotElFallback = document.getElementById('github-online-dot');
+    if (dotElFallback) dotElFallback.setAttribute('data-tooltip', `Active on GitHub`);
   });
 }
 
@@ -546,249 +573,325 @@ if (botTrigger && botPanel) {
     if (typing) typing.remove();
   }
 
-  function handleBotResponse(text) {
-    const q = text.toLowerCase().trim();
+  const BOT_MEMORY_KEY = 'ns_portfolio_bot_memory_v2';
+  const BOT_MAX_HISTORY = 8;
+  const fallbackBotMemory = {
+    name: '',
+    topics: [],
+    lastTopic: '',
+    lastIntent: '',
+    history: [],
+  };
 
-    // ── Knowledge base ──────────────────────────────────────────────
-    const kb = [
+  function loadBotMemory() {
+    try {
+      const stored = localStorage.getItem(BOT_MEMORY_KEY);
+      if (!stored) return { ...fallbackBotMemory };
+      const parsed = JSON.parse(stored);
+      return {
+        ...fallbackBotMemory,
+        ...parsed,
+        topics: Array.isArray(parsed.topics) ? parsed.topics.slice(0, 10) : [],
+        history: Array.isArray(parsed.history) ? parsed.history.slice(-BOT_MAX_HISTORY) : [],
+      };
+    } catch {
+      return { ...fallbackBotMemory };
+    }
+  }
 
-      // Greetings
-      {
-        match: /^(hi|hello|hey|sup|yo|good\s*(morning|afternoon|evening)|howdy|hiya|what'?s up)/,
-        ans: "Hey there! 👋 I'm Nikunj's portfolio bot. Ask me anything — his skills, projects, experience, availability, or how to get in touch!"
-      },
-      {
-        match: /how are you|how r u|how do you do/,
-        ans: "I'm doing great, thanks for asking! 😄 I'm here to tell you everything about Nikunj. What would you like to know?"
-      },
-      {
-        match: /who are you|what are you|introduce yourself|tell me about yourself/,
-        ans: "I'm the Portfolio Bot for Nikunj Sorathiya — a Full Stack Developer & AI/ML enthusiast. I can answer questions about his skills, projects, experience, education, and availability. Ask away! 🤖"
-      },
+  function saveBotMemory(nextMemory) {
+    try {
+      localStorage.setItem(BOT_MEMORY_KEY, JSON.stringify(nextMemory));
+    } catch {
+      // Ignore storage failures (private mode / quota limits).
+    }
+  }
 
-      // About Nikunj
-      {
-        match: /who is nikunj|about nikunj|tell me about nikunj|nikunj sorathiya/,
-        ans: "Nikunj Sorathiya is a Full Stack Developer and AI/ML enthusiast from India 🇮🇳. He builds production-grade web apps with React, Next.js & Node.js, and loves integrating AI into real-world products. He has 3+ years of coding experience and has deployed 5+ AI models."
-      },
-      {
-        match: /where.*from|location|city|country|india|gujarat/,
-        ans: "Nikunj is from India 🇮🇳. He works remotely and is open to opportunities worldwide."
-      },
-      {
-        match: /age|how old|born/,
-        ans: "Nikunj is a young developer in his early 20s, already building production-grade apps and AI systems. Age is just a number when the code ships! 🚀"
-      },
-      {
-        match: /education|degree|college|university|study|student/,
-        ans: "Nikunj is pursuing his degree in Computer Science/IT while simultaneously building real-world projects and contributing to open source. He believes in learning by doing."
-      },
-      {
-        match: /hobby|interest|free time|passion|outside.*work|when not coding/,
-        ans: "When Nikunj isn't coding, he's reading ML research papers, contributing to open source, exploring new AI tools, or experimenting with side projects. He's genuinely passionate about tech — it's not just a job for him. 📚"
-      },
-      {
-        match: /language.*speak|speak.*language|english|hindi|gujarati/,
-        ans: "Nikunj is fluent in English, Hindi, and Gujarati. He communicates clearly and professionally in English for all work-related interactions."
-      },
+  let botMemory = loadBotMemory();
 
-      // Skills & Tech Stack
-      {
-        match: /skill|tech.*stack|stack|technolog|what.*know|what.*use|tools/,
-        ans: "Nikunj's tech stack:\n\n🌐 Frontend: React, Next.js, TypeScript, Tailwind CSS\n⚙️ Backend: Node.js, Express, FastAPI, Python\n🗄️ Databases: MongoDB, PostgreSQL, Redis\n🤖 AI/ML: TensorFlow, PyTorch, OpenAI API, scikit-learn\n🐳 DevOps: Docker, GitHub Actions, Vercel, AWS\n🎨 Design: Figma"
-      },
-      {
-        match: /frontend|front.?end|react|next\.?js|typescript|tailwind|css|html/,
-        ans: "On the frontend, Nikunj is highly proficient in React (hooks, context, performance optimization), Next.js 14 (App Router, SSR, SSG), TypeScript, and Tailwind CSS. He builds pixel-perfect, accessible, and performant UIs."
-      },
-      {
-        match: /backend|back.?end|node|express|api|server|rest|graphql/,
-        ans: "For backend, Nikunj works with Node.js + Express for REST APIs, FastAPI (Python) for high-performance async services, and has experience with GraphQL. He follows clean architecture and writes well-documented APIs."
-      },
-      {
-        match: /database|db|mongo|postgresql|postgres|sql|redis|nosql/,
-        ans: "Nikunj is comfortable with both SQL (PostgreSQL with Prisma ORM) and NoSQL (MongoDB). He also uses Redis for caching and session management. He designs efficient schemas and writes optimized queries."
-      },
-      {
-        match: /ai|ml|machine learning|deep learning|neural|tensorflow|pytorch|model|nlp|computer vision/,
-        ans: "AI/ML is Nikunj's passion! 🤖 He has:\n• Trained custom CNNs for image classification (94% accuracy)\n• Built NLP pipelines for text analysis\n• Integrated OpenAI GPT API into production apps\n• Deployed 5+ AI models to production\n• Worked with TensorFlow, PyTorch, and scikit-learn"
-      },
-      {
-        match: /docker|devops|ci.?cd|github actions|deploy|cloud|aws|vercel|hosting/,
-        ans: "Nikunj containerizes apps with Docker, automates deployments with GitHub Actions CI/CD pipelines, and deploys to Vercel, AWS, and other cloud platforms. He follows zero-downtime deployment practices."
-      },
-      {
-        match: /figma|design|ui|ux|prototype/,
-        ans: "Nikunj uses Figma for UI/UX design and prototyping. He bridges the gap between design and development, ensuring pixel-perfect implementation of designs."
-      },
-      {
-        match: /python/,
-        ans: "Python is Nikunj's go-to language for AI/ML work. He uses it for building FastAPI backends, training ML models with TensorFlow/PyTorch, data processing with pandas/numpy, and scripting automation tasks."
-      },
-      {
-        match: /git|github|version control|open source|contribution/,
-        ans: "Nikunj's live GitHub profile currently shows 44 contributions this year, 13 public repositories, and 0 public stars and pull requests on the profile snapshot used by this portfolio. He follows Git best practices — feature branches, meaningful commits, and code reviews. Check his GitHub: github.com/Nikunj-1812"
-      },
+  function normalizeText(value) {
+    return String(value || '')
+      .toLowerCase()
+      .replace(/[’']/g, "'")
+      .replace(/[^a-z0-9\s+.-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
 
-      // Projects
-      {
-        match: /project|built|portfolio|work|what.*made|show.*work/,
-        ans: "Nikunj has built some impressive projects:\n\n🔷 DevFlow — Real-time SaaS project management (React, Node.js, MongoDB, Socket.io)\n🔷 NeuralVision — AI image classification API (Python, FastAPI, TensorFlow, Docker)\n🔷 ShopSense — E-commerce with AI recommendations (Next.js, PostgreSQL, Stripe)\n🔷 ChatBase — AI chatbot builder (React, OpenAI, Node.js, Redis)\n🔷 CodeSynth — AI code generator (TypeScript, Next.js, OpenAI)\n🔷 Trackify — Fitness tracking app (React Native, Node.js, MongoDB)\n\nVisit the Projects page for full details!"
-      },
-      {
-        match: /devflow|project management|saas|kanban/,
-        ans: "DevFlow is a real-time SaaS project management tool. It features drag-and-drop Kanban boards powered by Socket.io, team workspaces with role-based access, Slack webhook integration, and a rich activity feed. Built with React, Node.js, Express, and MongoDB."
-      },
-      {
-        match: /neuralvision|image.*classif|cnn|object.*detect/,
-        ans: "NeuralVision is a production-ready AI API for real-time image classification and object detection. It uses a custom CNN trained with TensorFlow (94% accuracy), served via FastAPI, containerized with Docker, and includes API key auth + rate limiting."
-      },
-      {
-        match: /shopsense|e.?commerce|shop|stripe|payment/,
-        ans: "ShopSense is a full-stack e-commerce platform built with Next.js 14 App Router. It features Stripe payments, AI-powered product recommendations, real-time inventory management, order tracking, and an admin dashboard. Uses PostgreSQL + Prisma ORM."
-      },
-      {
-        match: /chatbase|chatbot|gpt|openai|ai.*chat/,
-        ans: "ChatBase is an AI chatbot builder that lets businesses embed a trained assistant on their website. It uses OpenAI's GPT API, features a drag-and-drop widget customizer, conversation analytics, multi-language support, and a REST API. Built with React + Node.js + Redis."
-      },
-      {
-        match: /codesynth|code.*generat|ai.*code/,
-        ans: "CodeSynth is an AI-powered code generation tool that converts plain English into production-ready code. It supports 20+ languages, has a built-in Monaco editor, syntax highlighting, and uses streaming OpenAI API responses for a real-time typing effect. Built with Next.js + TypeScript."
-      },
-      {
-        match: /trackify|fitness|gps|workout|mobile.*app|react native/,
-        ans: "Trackify is a cross-platform fitness app built with React Native. It records GPS routes in real-time, visualizes workout data with interactive charts, supports social challenges, and sends push notifications via Firebase Cloud Messaging. Available on iOS and Android."
-      },
+  function cleanDisplayName(value) {
+    return String(value || '')
+      .replace(/\b(i am|i'm|im|call me|my name is|this is)\b/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/\.$/, '');
+  }
 
-      // Experience & Background
-      {
-        match: /experience|how long|years.*coding|coding.*years|background|career/,
-        ans: "Nikunj has 3+ years of hands-on coding experience. He started with web fundamentals, progressed to full-stack development, and has been deeply involved in AI/ML for the past 2 years. He's built 20+ projects ranging from SaaS apps to AI APIs."
-      },
-      {
-        match: /internship|intern|work.*experience|job.*history|previous.*work/,
-        ans: "Nikunj has worked on real-world projects and freelance engagements, building production applications for clients. He's also an active open source contributor. He's currently open to full-time roles and freelance projects."
-      },
-      {
-        match: /achievement|award|accomplishment|proud/,
-        ans: "Some of Nikunj's achievements:\n🏆 Deployed 5+ AI models to production\n🏆 Built 20+ projects across web and mobile\n🏆 44 GitHub contributions this year\n🏆 13 public repositories\n🏆 Active open source contributor on GitHub"
-      },
+  function pick(items) {
+    return items[Math.floor(Math.random() * items.length)];
+  }
 
-      // Availability & Hiring
-      {
-        match: /hire|hiring|available|availability|open.*to|looking.*for|job|full.?time|part.?time|freelance|contract|opportunity|work.*with/,
-        ans: "Yes! Nikunj is currently open to:\n✅ Full-time developer roles\n✅ Freelance & contract projects\n✅ AI/ML collaborations\n✅ Open source partnerships\n✅ Remote work (worldwide)\n\nReach him at nikunjsorathiya712@gmail.com or book a free call from the Contact section!"
-      },
-      {
-        match: /rate|salary|charge|cost|price|budget|how much/,
-        ans: "Nikunj's rates depend on the project scope, timeline, and complexity. The best way to discuss this is to book a free discovery call — he'll give you a clear quote after understanding your requirements. Use the 'Book Free Call' button in the Contact section!"
-      },
-      {
-        match: /remote|on.?site|relocat|work.*from.*home|wfh/,
-        ans: "Nikunj works fully remotely and is comfortable with async communication across time zones. He's open to occasional on-site visits for the right opportunity."
-      },
-      {
-        match: /timeline|deadline|how.*long|turnaround|delivery/,
-        ans: "Project timelines depend on scope and complexity. A simple landing page might take 1-2 weeks, while a full-stack SaaS app could take 2-3 months. Book a free call to discuss your specific project timeline!"
-      },
+  function rememberTopic(topic) {
+    if (!topic) return;
+    botMemory.lastTopic = topic;
+    if (!botMemory.topics.includes(topic)) {
+      botMemory.topics = [topic, ...botMemory.topics].slice(0, 5);
+    }
+    saveBotMemory(botMemory);
+  }
 
-      // Contact
-      {
-        match: /contact|reach|email|message|get.*touch|talk|connect|dm/,
-        ans: "You can reach Nikunj through multiple channels:\n📧 Email: nikunjsorathiya712@gmail.com\n💼 LinkedIn: linkedin.com/in/nikunj-sorathiya-6b7098382\n🐙 GitHub: github.com/Nikunj-1812\n🐦 X (Twitter): x.com/Nikunj_1812_\n📞 Or book a free call from the Contact section!"
-      },
-      {
-        match: /linkedin/,
-        ans: "Connect with Nikunj on LinkedIn: linkedin.com/in/nikunj-sorathiya-6b7098382 — he's active there and responds quickly to messages!"
-      },
-      {
-        match: /github/,
-        ans: "Check out Nikunj's GitHub: github.com/Nikunj-1812 — 44 contributions this year and 13 public repositories on the current profile snapshot. You'll find all his open source work there!"
-      },
-      {
-        match: /twitter|x\.com|tweet/,
-        ans: "Follow Nikunj on X (Twitter): x.com/Nikunj_1812_ — he shares dev tips, AI insights, and project updates."
-      },
-      {
-        match: /book.*call|schedule|meeting|call|consultation|discovery/,
-        ans: "You can book a free 30-minute discovery call with Nikunj directly from this portfolio! Just click the 'Book Free Call' button in the Contact section. He's available on Google Meet, Zoom, or phone call. 📞"
-      },
-      {
-        match: /response.*time|reply.*fast|how.*soon|when.*reply/,
-        ans: "Nikunj typically responds to emails and LinkedIn messages within 24 hours. For urgent inquiries, booking a call is the fastest way to connect!"
-      },
+  function rememberHistory(role, text, intent) {
+    botMemory.history.push({ role, text, intent, at: Date.now() });
+    botMemory.history = botMemory.history.slice(-BOT_MAX_HISTORY);
+    saveBotMemory(botMemory);
+  }
 
-      // Portfolio & Website
-      {
-        match: /portfolio|website|this.*site|built.*this|how.*made.*this/,
-        ans: "This portfolio is built with pure HTML, CSS, and vanilla JavaScript — no frameworks! It features GSAP animations, ScrollTrigger, VanillaTilt 3D effects, a custom cursor, theme switching, click sounds, and this AI bot. All hand-crafted by Nikunj. 🎨"
-      },
-      {
-        match: /blog|article|writing|post|read/,
-        ans: "Nikunj writes about web development and AI/ML on his blog. Topics include React Server Components, building image classifiers with TensorFlow.js, Docker + GitHub Actions deployment setups, and more. Check the Blog section!"
-      },
+  function detectName(text) {
+    const match = text.match(/\b(?:my name is|call me|i am|i'm|im)\s+([a-z][a-z'\-]+(?:\s+[a-z][a-z'\-]+){0,2})/i);
+    return match ? cleanDisplayName(match[1]) : '';
+  }
 
-      // Fun / Personality
-      {
-        match: /fun fact|interesting|surprise|cool.*fact/,
-        ans: "Fun fact: Nikunj reads ML research papers for fun! 🤓 He also built this entire portfolio from scratch without any CSS frameworks — pure CSS with custom animations. He's the kind of developer who obsesses over the details."
-      },
-      {
-        match: /favorite|favourite|prefer|best.*language|love.*code/,
-        ans: "Nikunj's favourite stack is Next.js + TypeScript on the frontend and FastAPI + Python for AI services. His favourite language overall is TypeScript — he loves the type safety and developer experience. For AI work, Python is king! 🐍"
-      },
-      {
-        match: /strength|good at|best.*at|expert|speciali/,
-        ans: "Nikunj's core strengths:\n💪 Building scalable full-stack web applications\n💪 Integrating AI/ML into real products\n💪 Clean, maintainable code architecture\n💪 Fast delivery without sacrificing quality\n💪 Bridging the gap between design and development"
-      },
-      {
-        match: /weakness|improve|learning|currently.*learn|studying/,
-        ans: "Nikunj is currently deepening his knowledge in LLM fine-tuning, advanced system design, and Kubernetes for container orchestration. He believes in continuous learning and always has something new on his reading list. 📖"
-      },
+  function detectIntent(rawText) {
+    const text = normalizeText(rawText);
+    const tokens = text.split(' ').filter(Boolean);
 
-      // Collaboration
-      {
-        match: /team|collaborat|work.*with.*team|team.*player|agile|scrum/,
-        ans: "Nikunj is a strong team player. He's comfortable working in Agile/Scrum environments, doing code reviews, pair programming, and async collaboration using tools like Slack, Notion, Linear, and GitHub. He communicates proactively and ships on time."
-      },
-      {
-        match: /startup|agency|company|corporate|enterprise/,
-        ans: "Nikunj has experience working on both startup-style fast-paced projects and more structured enterprise-level applications. He adapts quickly to different team cultures and workflows."
-      },
+    const isShortFollowUp = tokens.length <= 5 && /^(it|that|this|there|here|more|again|what about|and )/.test(text);
 
-      // Fallback suggestions
-      {
-        match: /help|what.*ask|what.*can.*do|options|menu|guide/,
-        ans: "Here's what you can ask me about:\n\n👤 About Nikunj\n🛠️ Skills & Tech Stack\n🚀 Projects\n💼 Experience & Background\n📅 Availability & Hiring\n📧 Contact Info\n💰 Rates & Timeline\n🌐 This Portfolio\n\nJust type your question naturally!"
-      },
+    const intents = [
+      { name: 'greeting', topic: 'greeting', score: /^(hi|hello|hey|sup|yo|good morning|good afternoon|good evening|howdy|hiya|what's up)/.test(text) ? 5 : 0 },
+      { name: 'identity', topic: 'about', score: /(who is nikunj|about nikunj|tell me about nikunj|nikunj sorathiya|who are you|introduce yourself|tell me about yourself)/.test(text) ? 5 : 0 },
+      { name: 'skills', topic: 'skills', score: /(skill|tech stack|stack|technolog|what do you know|what do you use|tools|frontend|back end|backend|react|next js|typescript|tailwind|node|express|python|api|database|ai|ml|machine learning|devops|deploy|figma)/.test(text) ? 4 : 0 },
+      { name: 'projects', topic: 'projects', score: /(project|built|portfolio|work|show me|what have you made|devflow|neuralvision|shopsense|chatbase|codesynth|trackify)/.test(text) ? 4 : 0 },
+      { name: 'experience', topic: 'experience', score: /(experience|how long|years coding|coding years|background|career|internship|intern|job history|previous work|achievement|award|proud)/.test(text) ? 4 : 0 },
+      { name: 'availability', topic: 'availability', score: /(hire|hiring|available|availability|open to|looking for|job|full time|part time|freelance|contract|opportunity|work with|remote|onsite|relocat|timeline|deadline|delivery|rate|salary|charge|cost|price|budget|how much)/.test(text) ? 4 : 0 },
+      { name: 'contact', topic: 'contact', score: /(contact|reach|email|message|get in touch|talk|connect|dm|linkedin|github|twitter|x\.com|book call|schedule|meeting|call|consultation|response time|reply fast|when reply)/.test(text) ? 4 : 0 },
+      { name: 'blog', topic: 'blog', score: /(blog|article|writing|post|read|dark patterns|agi|design|this post|blog one|blog 1)/.test(text) ? 3 : 0 },
+      { name: 'portfolio', topic: 'portfolio', score: /(portfolio|website|this site|built this|how made this|this website)/.test(text) ? 3 : 0 },
+      { name: 'personal', topic: 'personal', score: /(education|degree|college|university|study|student|hobby|interest|free time|passion|language|speak|english|hindi|gujarati|favorite|favourite|prefer|strength|weakness|learning|currently learn|studying)/.test(text) ? 3 : 0 },
+      { name: 'collaboration', topic: 'collaboration', score: /(team|collaborat|work with team|team player|agile|scrum|startup|agency|company|corporate|enterprise|open source|contribution)/.test(text) ? 3 : 0 },
     ];
-    // ── End knowledge base ──────────────────────────────────────────
 
-    // Find best match
-    let response = null;
-    for (const entry of kb) {
-      if (entry.match.test(q)) {
-        response = entry.ans;
-        break;
+    let best = intents.sort((a, b) => b.score - a.score)[0];
+
+    if (best && best.score > 0) return best;
+
+    if (isShortFollowUp && botMemory.lastTopic) {
+      return { name: 'followup', topic: botMemory.lastTopic, score: 1 };
+    }
+
+    if (tokens.some(token => botMemory.topics.includes(token))) {
+      return { name: 'context', topic: botMemory.lastTopic || 'about', score: 1 };
+    }
+
+    return { name: 'unknown', topic: botMemory.lastTopic || '', score: 0 };
+  }
+
+  function buildNaturalResponse(intent, rawText) {
+    const text = normalizeText(rawText);
+    const userName = botMemory.name;
+    const greetingPrefix = userName ? `${pick(['Hi', 'Hey', 'Hello'])} ${userName}` : pick(['Hi', 'Hey', 'Hello']);
+    const followupPrefix = botMemory.lastTopic ? pick(['On that,', 'A bit more context:', 'To add to that:', 'Here is the short version:']) : pick(['Sure.', 'Here is a concise answer.', 'Absolutely.']);
+
+    if (botMemory.name && /^(hi|hello|hey|sup|yo|good morning|good afternoon|good evening|howdy|hiya|what's up)/.test(text)) {
+      return `${greetingPrefix}! ${pick([
+        'Good to see you here again.',
+        'What would you like to know about Nikunj today?',
+        'Happy to help with projects, skills, experience, or contact details.',
+      ])}`;
+    }
+
+    if (!botMemory.name && /^(hi|hello|hey|sup|yo|good morning|good afternoon|good evening|howdy|hiya|what's up)/.test(text)) {
+      return pick([
+        'Hey! I can help you explore Nikunj’s skills, projects, background, availability, or contact details.',
+        'Hello! Ask me naturally about Nikunj and I’ll keep the answers concise and specific.',
+      ]);
+    }
+
+    if (intent.name === 'identity') {
+      rememberTopic('about');
+      return pick([
+        'Nikunj Sorathiya is a Full Stack Developer and AI/ML enthusiast from India who builds production-focused web apps and AI-powered products.',
+        'Nikunj is a developer who works across frontend, backend, and AI/ML. He focuses on shipping practical products, not just demos.',
+      ]);
+    }
+
+    if (intent.topic === 'skills') {
+      rememberTopic('skills');
+      return pick([
+        'His strongest areas are React, Next.js, TypeScript, Node.js, Python, MongoDB, PostgreSQL, and AI integration. He also cares about performance and clean UI work.',
+        'Nikunj’s stack spans frontend, backend, databases, and AI. If you want, I can break it down by frontend, backend, or AI/ML.',
+      ]);
+    }
+
+    if (intent.topic === 'projects') {
+      rememberTopic('projects');
+      return pick([
+        'He has built projects like DevFlow, NeuralVision, ShopSense, ChatBase, CodeSynth, and Trackify. If you want, I can summarize any one of them.',
+        'Nikunj’s portfolio includes SaaS, AI, e-commerce, and mobile projects. Ask about any project by name and I’ll give you the relevant details.',
+      ]);
+    }
+
+    if (intent.topic === 'experience') {
+      rememberTopic('experience');
+      return pick([
+        'He has solid hands-on experience building real-world apps, contributing to open source, and working across full-stack and AI-focused projects.',
+        'Nikunj’s background is strongest in practical project work, product thinking, and iterative shipping. He’s more builder than theorist.',
+      ]);
+    }
+
+    if (intent.topic === 'availability') {
+      rememberTopic('availability');
+      return pick([
+        'He is open to full-time, freelance, and collaboration opportunities. For scope or timelines, the best next step is a short discovery call.',
+        'Nikunj is available for remote opportunities and project work. If you share your needs, I can help frame the best way to reach out.',
+      ]);
+    }
+
+    if (intent.topic === 'contact') {
+      rememberTopic('contact');
+      return pick([
+        'You can reach him by email, LinkedIn, GitHub, or X. If you want, I can give you the most direct option for hiring, collaboration, or casual questions.',
+        'The fastest route is email, but LinkedIn is also a good option for professional outreach. I can share the exact links if needed.',
+      ]);
+    }
+
+    if (intent.topic === 'blog') {
+      rememberTopic('blog');
+      return pick([
+        'The blog covers practical topics like dark patterns, AGI-era careers, and web design trends. If you want a specific post, mention the title.',
+        'He writes about design, AI, and the future of work. I can point you to a specific article or summarize one for you.',
+      ]);
+    }
+
+    if (intent.topic === 'portfolio') {
+      rememberTopic('portfolio');
+      return pick([
+        'This portfolio is built with HTML, CSS, vanilla JavaScript, GSAP, and a few custom interactions. The focus is on polish without heavy frameworks.',
+        'It is a handcrafted portfolio with custom animations, a bot, project showcases, and a dynamic GitHub section.',
+      ]);
+    }
+
+    if (intent.topic === 'personal') {
+      rememberTopic('personal');
+      return pick([
+        'Nikunj is still pursuing his CS/IT education while building projects and learning in public. Outside work, he tends to stay close to AI and software topics.',
+        'He communicates in English, Hindi, and Gujarati, and he likes working on practical, product-oriented ideas.',
+      ]);
+    }
+
+    if (intent.topic === 'collaboration') {
+      rememberTopic('collaboration');
+      return pick([
+        'He works well in team settings, is comfortable with async communication, and usually prefers clear ownership and direct feedback.',
+        'Nikunj is collaborative and adaptable. He fits well in startup-style environments, but he also handles more structured workflows when needed.',
+      ]);
+    }
+
+    if (intent.name === 'followup') {
+      return pick([
+        `${followupPrefix} I’m still talking about ${botMemory.lastTopic}. If you want, I can go one level deeper or switch topics.`,
+        `${followupPrefix} that still seems to relate to ${botMemory.lastTopic}. Ask a more specific follow-up and I’ll narrow it down.`,
+      ]);
+    }
+
+    if (/^(yes|yep|yeah|sure|ok|okay|cool|thanks|thank you|got it|great)$/.test(text)) {
+      return botMemory.lastTopic
+        ? `Absolutely. If you want, I can expand on ${botMemory.lastTopic} or move to projects, availability, or contact details.`
+        : 'Absolutely. Ask me about skills, projects, experience, availability, or contact details.';
+    }
+
+    if (/\b(my name is|call me|i am|i'm|im)\b/.test(text)) {
+      const detectedName = detectName(rawText);
+      if (detectedName) {
+        botMemory.name = detectedName;
+        saveBotMemory(botMemory);
+        return `Nice to meet you, ${detectedName}. I’ll keep that in mind while we chat.`;
       }
     }
 
-    // Fallback
-    if (!response) {
-      const fallbacks = [
-        "Hmm, I'm not sure about that one! Try asking about Nikunj's skills, projects, experience, or how to hire him. 😊",
-        "I don't have an answer for that yet! You can always reach Nikunj directly at nikunjsorathiya712@gmail.com for specific questions.",
-        "That's outside my knowledge base! Try asking about tech stack, projects, availability, or contact info. Or just email Nikunj directly — he's super responsive! 📧",
-      ];
-      response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    if (/\b(more|deeper|detail|details|expand|explain|specifically)\b/.test(text) && botMemory.lastTopic) {
+      return pick([
+        `Sure — I can go deeper on ${botMemory.lastTopic}. What part matters most to you?`,
+        `Happy to expand on ${botMemory.lastTopic}. If you want, ask about the tools, process, or examples behind it.`,
+      ]);
     }
 
-    const delay = 600 + Math.random() * 500; // 600–1100ms feels natural
+    if (/\bhelp\b/.test(text)) {
+      return 'You can ask naturally, for example: "What does Nikunj build?", "Tell me more about DevFlow", "Is he available for freelance?", or "How do I contact him?"';
+    }
+
+    return null;
+  }
+
+  function handleBotResponse(text) {
+    const detectedName = detectName(text);
+    if (detectedName) {
+      botMemory.name = detectedName;
+      saveBotMemory(botMemory);
+    }
+
+    const intent = detectIntent(text);
+    botMemory.lastIntent = intent.name;
+    rememberHistory('user', text, intent.name);
+
+    const response = buildNaturalResponse(intent, text) || pick([
+      'I can help with Nikunj’s skills, projects, experience, availability, contact details, or blog posts. Ask naturally and I’ll answer in context.',
+      'I’m not fully sure yet, but I can usually answer questions about Nikunj’s work, background, or how to reach him. Try asking in a bit more detail.',
+      'If you want, ask me about a specific project, skill area, or whether Nikunj is available for work. I’ll keep it concise and useful.',
+    ]);
+
+    const delay = 350 + Math.random() * 350;
     setTimeout(() => {
       removeTyping();
       addMessage(response);
+      rememberHistory('bot', response, intent.name);
     }, delay);
   }
+
+  function buildBookingEmailPayload() {
+    const bookingName = document.getElementById('b-name');
+    const bookingEmail = document.getElementById('b-email');
+    const bookingNotes = document.getElementById('b-notes');
+    const bookingState = document.getElementById('b-state');
+    const bookingCity = document.getElementById('b-city');
+
+    return {
+      name: bookingName ? bookingName.value.trim() : '',
+      email: bookingEmail ? bookingEmail.value.trim() : '',
+      notes: bookingNotes ? bookingNotes.value.trim() : '',
+      date: selectedDate,
+      time: selectedTime,
+      location: selectedLocation,
+      state: bookingState ? bookingState.value.trim() : '',
+      city: bookingCity ? bookingCity.value.trim() : '',
+    };
+  }
+
+  function validateBookingPayload(payload) {
+    const errors = [];
+
+    if (!payload.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) errors.push('email');
+
+    return { valid: errors.length === 0, errors };
+  }
+
+  window.submitBookingToFirestore = async function submitBookingToFirestore() {
+    if (typeof window.saveBookingToFirestore !== 'function') {
+      throw new Error('Firebase Firestore is not available yet.');
+    }
+
+    const payload = buildBookingEmailPayload();
+    const validation = validateBookingPayload(payload);
+
+    if (!validation.valid) {
+      const missing = validation.errors.join(', ');
+      throw new Error(`Please complete the required booking fields: ${missing}.`);
+    }
+
+    return window.saveBookingToFirestore({
+      ...payload,
+      notes: payload.notes || '',
+    });
+  };
 
   function sendMessage() {
     const text = botInput.value.trim();
@@ -839,6 +942,7 @@ if (bookCallBtn && bookingModal) {
   // Step 1 Logic
   const bDate = document.getElementById('b-date');
   const bState = document.getElementById('b-state');
+  const bCity = document.getElementById('b-city');
   const bLocation = document.getElementById('b-location');
   const timeSlots = document.querySelectorAll('.time-slot');
   const bNextBtn = document.getElementById('b-next-btn');
@@ -870,6 +974,10 @@ if (bookCallBtn && bookingModal) {
     bLocation.addEventListener('change', (e) => {
       selectedLocation = e.target.value;
     });
+  }
+
+  if (bCity) {
+    bCity.addEventListener('input', checkStep1);
   }
 
   timeSlots.forEach(slot => {
@@ -904,25 +1012,59 @@ if (bookCallBtn && bookingModal) {
   }
 
   if (confirmBtn) {
-    confirmBtn.addEventListener('click', () => {
-      if (!bName.value || !bEmail.value) {
-        alert("Please fill in your name and email.");
+    confirmBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const emailValue = bEmail.value.trim();
+      const nameValue = bName.value.trim();
+      const bookingStatus = document.getElementById('booking-status-message');
+
+      if (!emailValue) {
+        alert('Please enter your email address so I can send the booking request.');
         return;
       }
-      document.getElementById('success-name').textContent = bName.value;
-      document.getElementById('success-email').textContent = bEmail.value;
+
+      if (bookingStatus) {
+        bookingStatus.textContent = 'Sending your booking request...';
+      }
+
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Sending...';
+
+      try {
+        await window.submitBookingToFirestore();
+      } catch (error) {
+        if (bookingStatus) {
+          bookingStatus.textContent = error.message || 'Unable to save your booking right now. Please try again.';
+        }
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = 'Confirm Booking';
+        return;
+      }
 
       goToStep(2);
-      
+      document.getElementById('success-name').textContent = nameValue || 'there';
+      document.getElementById('success-email').textContent = emailValue;
+
       // Reset form
       bName.value = '';
       bEmail.value = '';
       document.getElementById('b-notes').value = '';
-      bDate.value = '';
+      if (bDate) bDate.value = '';
+      if (bState) bState.value = '';
+      if (bCity) bCity.value = '';
       selectedDate = '';
       selectedTime = '';
+      selectedLocation = bLocation ? bLocation.value : 'Google Meet';
       timeSlots.forEach(s => s.classList.remove('selected'));
       bNextBtn.disabled = true;
+
+      confirmBtn.disabled = false;
+      confirmBtn.innerHTML = 'Confirm Booking';
+
+      if (bookingStatus) {
+        bookingStatus.textContent = '';
+      }
     });
   }
 
@@ -948,3 +1090,23 @@ if (bookCallBtn && bookingModal) {
     });
   }
 }
+
+// Reveal project card images in color when scrolled into view
+(function initProjectColorReveal() {
+  const cards = document.querySelectorAll('.about-page .project-card, #projects .project-card');
+  if (!cards.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+})();

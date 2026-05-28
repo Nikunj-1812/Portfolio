@@ -6,6 +6,8 @@
   <title>Blog | Nikunj Sorathiya</title>
   <meta name="description" content="All blog posts by Nikunj Sorathiya, including dark patterns and AGI-era career strategy.">
   <meta name="theme-color" content="#0D0D0D">
+  <link rel="icon" type="image/png" href="assets/logo.png?v=2" sizes="any">
+  <link rel="shortcut icon" type="image/png" href="assets/logo.png?v=2">
   <!-- Clash Display + Satoshi (Fontshare) -->
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
 
@@ -18,7 +20,7 @@
   <!-- Theme Init to prevent flash -->
   <script>
     (function() {
-      var theme = localStorage.getItem('theme') || 'dark';
+      const theme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
@@ -42,7 +44,7 @@
 
 
       <div class="blog-grid blog-grid-listing">
-        <article class="blog-card interactive" data-category="Design" data-tilt onclick="window.location.href='blog2.html'" style="cursor:pointer">
+        <article class="blog-card interactive" data-category="Design" data-tilt onclick="window.location.href='blog1.html'" style="cursor:pointer">
           <div class="blog-body">
             <h3>Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You</h3>
             <p>A simple breakdown of deceptive UI tricks, why they work, and how to protect yourself in everyday apps.</p>

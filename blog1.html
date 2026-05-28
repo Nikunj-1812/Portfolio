@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You | Nikunj Sorathiya</title>
+  <meta name="description" content="Have you ever planned to order a ₹200 meal, but the bill magically inflated to ₹280? This post exposes dark patterns in popular apps.">
+  <meta name="theme-color" content="#0D0D0D">
+  <link rel="icon" type="image/png" href="assets/logo.png?v=2" sizes="any">
+  <link rel="shortcut icon" type="image/png" href="assets/logo.png?v=2">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&f[]=satoshi@300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="cursor-dot"></div>
+  <div id="scroll-bar"></div>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="blog-page">
+    <section class="blog-hero reveal">
+      <a class="blog-back-btn interactive" href="blog.html"><i class="ti ti-arrow-left"></i> Back to All Posts</a>
+      <div class="section-header-wrap blog-hero-wrap">
+        <div class="sh-watermark">BLOG</div>
+        <div class="sh-label">WRITING</div>
+        <h1 class="sh-title">Dark Patterns: How Swiggy, Amazon, and Netflix Play Psychological Tricks on You</h1>
+        <div class="sh-line"></div>
+        <p class="sh-desc">Have you ever planned to order a ₹200 meal, but the bill magically inflated to ₹280? Or tried to cancel a subscription and given up? Welcome to dark patterns.</p>
+      </div>
+
+      <article class="blog-article">
+        <div class="blog-article-body">
+          <div class="blog-lede">
+            <p class="blog-intro">Dark patterns are deceptive UI designs intentionally crafted to trick users into taking actions the company wants, rather than what the user intends. This isn't a bug—it's deliberate psychological manipulation. Below, I expose common dark patterns used by major apps with practical examples and advice for readers in India.</p>
+          </div>
+
+          <hr class="blog-divider">
+
+          <section class="blog-section">
+            <h2>1. Swiggy &amp; Zomato: "Sneak into Basket" and Hidden Costs</h2>
+            <p>Food delivery apps are some of the biggest culprits. Their most common trick is quietly adding extra charges on the final checkout page.</p>
+            <p><strong>How it works:</strong> When you add food to your cart, the price looks reasonable. But on the payment screen, a "Packaging fee," "Handling fee," "Surge fee," and auto-selected "Donations" or "Tips" are suddenly tacked on.</p>
+            <p>This trick is known as <strong>Sneak into Basket</strong>. Pre-ticked boxes (₹2 donation, default ₹20 tip) inflate the final bill. People ordering food are often in a hurry and forget to uncheck hidden fees.</p>
+            <blockquote class="blog-quote">Visual example: A Swiggy checkout where the total jumps due to pre-checked donation boxes and vaguely defined "convenience fees."</blockquote>
+          </section>
+
+          <hr class="blog-divider">
+
+          <section class="blog-section">
+            <h2>2. Amazon: The "Roach Motel" (Easy to Check In, Hard to Leave)</h2>
+            <p>Amazon makes purchasing effortless, but canceling subscriptions can be a maze.</p>
+            <p><strong>How it works:</strong> Subscribing is often one click, but canceling Prime is buried. This is the <strong>Roach Motel</strong>—easy to enter, hard to exit.</p>
+            <p>During cancellation, you'll be repeatedly asked "Are you sure?" The button to stay subscribed is brightly styled, while the actual cancel action is dull or hidden. This is <strong>Misdirection</strong>, steering users toward keeping the subscription.</p>
+            <blockquote class="blog-quote">Visual example: Prime's cancellation flow with a bright "Keep My Benefits" option and a muted "Cancel" link.</blockquote>
+          </section>
+
+          <hr class="blog-divider">
+
+          <section class="blog-section">
+            <h2>3. Netflix: Fear Of Missing Out (FOMO) &amp; Misdirection</h2>
+            <p>Netflix looks clean, but subtly nudges users toward pricier plans.</p>
+            <p><strong>How it works:</strong> When creating an account, Netflix often shows the most expensive plan selected by default. Cheaper plans may be hidden behind a small "See all plans" link.</p>
+            <p>This combination of <strong>Confirmshaming</strong> and <strong>Misdirection</strong> aims to get you to pick a higher tier without realizing cheaper options exist.</p>
+            <blockquote class="blog-quote">Visual example: Pricing screens favoring the premium plan while hiding the basic option behind a tiny link.</blockquote>
+          </section>
+
+          <hr class="blog-divider">
+
+          <section class="blog-section">
+            <h2>What Are the Rules in India?</h2>
+            <p>The Indian government is taking action. The Central Consumer Protection Authority (CCPA) has issued guidelines banning dark patterns in e-commerce.</p>
+            <p>Examples now considered illegal include:</p>
+            <ul class="blog-list">
+              <li><strong>False Urgency:</strong> Fake timers or "Only 2 items left" when inventory is ample.</li>
+              <li><strong>Forced Action:</strong> Forcing users to sign up or buy unrelated products to use fundamental features.</li>
+              <li><strong>Subscription Traps:</strong> Making cancellation intentionally complex or hiding the cancel option.</li>
+            </ul>
+          </section>
+
+          <hr class="blog-divider">
+
+          <section class="blog-section">
+            <h2>How Can You Protect Yourself?</h2>
+            <ol class="blog-list numbered">
+              <li><strong>Slow Down:</strong> Before hitting "Pay", review the price breakdown and uncheck pre-ticked boxes.</li>
+              <li><strong>Read the Buttons:</strong> Don't trust colors — read the text. Designers use colors to mislead.</li>
+              <li><strong>Call Out Brands:</strong> Take screenshots and expose dark patterns on platforms like X or LinkedIn; public pressure forces change.</li>
+            </ol>
+          </section>
+
+          <p class="blog-meta blog-meta-end">By Nikunj Sorathiya</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <button id="back-to-top" class="interactive" aria-label="Back to top"><i class="ti ti-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+  <script src="loadComponents.js"></script>
+</body>
+</html>

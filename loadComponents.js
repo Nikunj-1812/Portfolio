@@ -1,7 +1,9 @@
-// Prevent browser's native hash scroll — sections are dynamically injected
-// so the target doesn't exist yet when the browser tries to scroll
-if (window.location.hash) {
-    history.scrollRestoration = 'manual';
+// Keep the page anchored to the top on refresh; hash scrolling is handled manually below.
+history.scrollRestoration = 'manual';
+const navigationType = performance.getEntriesByType('navigation')?.[0]?.type || '';
+const isReload = navigationType === 'reload';
+
+if (isReload || !window.location.hash) {
     window.scrollTo(0, 0);
 }
 
@@ -28,7 +30,7 @@ async function loadComponents() {
         }
 
         // Initialize scripts after components are loaded
-        const scriptsToLoad = ['main.js'];
+        const scriptsToLoad = ['firebase-init.mjs', 'main.js'];
         if (window.location.pathname.includes('blog.html') || window.location.pathname.includes('blog2.html') || window.location.pathname.includes('blog3.html')) {
             scriptsToLoad.push('blog.js');
         }
@@ -39,6 +41,9 @@ async function loadComponents() {
         for (let scriptSrc of scriptsToLoad) {
             const script = document.createElement('script');
             script.src = scriptSrc;
+            if (scriptSrc.endsWith('.mjs')) {
+                script.type = 'module';
+            }
             document.body.appendChild(script);
         }
 
@@ -46,7 +51,18 @@ async function loadComponents() {
         // (sections like #about and #contact are dynamically loaded,
         //  so the browser's native hash scroll fires before they exist)
         const hash = window.location.hash;
-        if (hash) {
+        const scrollToHome = () => {
+            const home = document.querySelector('#home');
+            if (home) {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                return true;
+            }
+            return false;
+        };
+
+        if (isReload || !hash) {
+            scrollToHome();
+        } else if (hash) {
             // Kill CSS smooth scroll so there's zero animation drift
             document.documentElement.style.scrollBehavior = 'auto';
             document.body.style.scrollBehavior = 'auto';
