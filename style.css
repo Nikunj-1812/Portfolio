@@ -297,10 +297,12 @@ ul {
   background: rgba(0, 0, 0, 0.5);
   z-index: 98;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.35s ease;
 }
 .nav-backdrop.active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 /* Mobile overlay */
@@ -317,10 +319,12 @@ ul {
   justify-content: center;
   gap: 2.2rem;
   transform: translateY(-100%);
+  pointer-events: none;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .nav-overlay.active {
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* Stagger overlay links on open */
@@ -2808,11 +2812,13 @@ html {
     gap: 0;
     padding: 5rem 1.25rem 1.5rem 1.5rem;
     transform: translateX(100%);
+    pointer-events: none;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: -12px 0 40px rgba(0, 0, 0, 0.35);
   }
   .nav-overlay.active {
     transform: translateX(0);
+    pointer-events: auto;
   }
   /* Smaller, tighter links */
   .nav-overlay a {

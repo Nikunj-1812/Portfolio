@@ -660,11 +660,11 @@ if (botTrigger && botPanel) {
       { name: 'greeting', topic: 'greeting', score: /^(hi|hello|hey|sup|yo|good morning|good afternoon|good evening|howdy|hiya|what's up)/.test(text) ? 5 : 0 },
       { name: 'identity', topic: 'about', score: /(who is nikunj|about nikunj|tell me about nikunj|nikunj sorathiya|who are you|introduce yourself|tell me about yourself)/.test(text) ? 5 : 0 },
       { name: 'skills', topic: 'skills', score: /(skill|tech stack|stack|technolog|what do you know|what do you use|tools|frontend|back end|backend|react|next js|typescript|tailwind|node|express|python|api|database|ai|ml|machine learning|devops|deploy|figma)/.test(text) ? 4 : 0 },
-      { name: 'projects', topic: 'projects', score: /(project|built|portfolio|work|show me|what have you made|devflow|neuralvision|shopsense|chatbase|codesynth|trackify)/.test(text) ? 4 : 0 },
+      { name: 'projects', topic: 'projects', score: /(project|built|portfolio|work|show me|what have you made|whiteboard|collaborative whiteboard|chatify|travelloop|cinematch|movie recommendation|travel planning)/.test(text) ? 4 : 0 },
       { name: 'experience', topic: 'experience', score: /(experience|how long|years coding|coding years|background|career|internship|intern|job history|previous work|achievement|award|proud)/.test(text) ? 4 : 0 },
       { name: 'availability', topic: 'availability', score: /(hire|hiring|available|availability|open to|looking for|job|full time|part time|freelance|contract|opportunity|work with|remote|onsite|relocat|timeline|deadline|delivery|rate|salary|charge|cost|price|budget|how much)/.test(text) ? 4 : 0 },
       { name: 'contact', topic: 'contact', score: /(contact|reach|email|message|get in touch|talk|connect|dm|linkedin|github|twitter|x\.com|book call|schedule|meeting|call|consultation|response time|reply fast|when reply)/.test(text) ? 4 : 0 },
-      { name: 'blog', topic: 'blog', score: /(blog|article|writing|post|read|dark patterns|agi|design|this post|blog one|blog 1)/.test(text) ? 3 : 0 },
+      { name: 'blog', topic: 'blog', score: /(blog|article|writing|post|read|dark patterns|agi|web design|future of web design|future job market|this post|blog one|blog 1|blog 2|blog 3)/.test(text) ? 3 : 0 },
       { name: 'portfolio', topic: 'portfolio', score: /(portfolio|website|this site|built this|how made this|this website)/.test(text) ? 3 : 0 },
       { name: 'personal', topic: 'personal', score: /(education|degree|college|university|study|student|hobby|interest|free time|passion|language|speak|english|hindi|gujarati|favorite|favourite|prefer|strength|weakness|learning|currently learn|studying)/.test(text) ? 3 : 0 },
       { name: 'collaboration', topic: 'collaboration', score: /(team|collaborat|work with team|team player|agile|scrum|startup|agency|company|corporate|enterprise|open source|contribution)/.test(text) ? 3 : 0 },
@@ -725,8 +725,8 @@ if (botTrigger && botPanel) {
     if (intent.topic === 'projects') {
       rememberTopic('projects');
       return pick([
-        'He has built projects like DevFlow, NeuralVision, ShopSense, ChatBase, CodeSynth, and Trackify. If you want, I can summarize any one of them.',
-        'Nikunj’s portfolio includes SaaS, AI, e-commerce, and mobile projects. Ask about any project by name and I’ll give you the relevant details.',
+        'His current projects include Collaborative Whiteboard, Chatify, TravelLoop, and CineMatch. I can summarize any one of them if you want the short version.',
+        'Nikunj’s portfolio currently covers real-time collaboration, chat apps, travel planning, and AI recommendations. Ask about a specific project and I’ll give you the relevant details.',
       ]);
     }
 
@@ -757,8 +757,8 @@ if (botTrigger && botPanel) {
     if (intent.topic === 'blog') {
       rememberTopic('blog');
       return pick([
-        'The blog covers practical topics like dark patterns, AGI-era careers, and web design trends. If you want a specific post, mention the title.',
-        'He writes about design, AI, and the future of work. I can point you to a specific article or summarize one for you.',
+        'The blog currently has three posts: Dark Patterns, Surviving and Thriving in the AGI Era, and The Future of Web Design in an AI-First World. Mention any title and I’ll summarize it.',
+        'He writes about design, AI, and the future of work. The latest posts focus on deceptive UI patterns, AGI-era careers, and how AI is changing web design.',
       ]);
     }
 
@@ -816,7 +816,7 @@ if (botTrigger && botPanel) {
     }
 
     if (/\bhelp\b/.test(text)) {
-      return 'You can ask naturally, for example: "What does Nikunj build?", "Tell me more about DevFlow", "Is he available for freelance?", or "How do I contact him?"';
+      return 'You can ask naturally, for example: "What does Nikunj build?", "Tell me more about Chatify", "What is the latest blog post about?", or "How do I contact him?"';
     }
 
     return null;
